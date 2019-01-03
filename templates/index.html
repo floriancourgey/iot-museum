@@ -28,24 +28,23 @@
     </div>
     <script src="static/jquery/jquery.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-      var artworks = {{artworks|tojson}};
       var $img = null;
       var $title = null;
       var previousId = null;
       var nextId = null;
       function previous(){
-        setArtworkForId(previousId);
+        setArtworkForId(0); // todo, but how??
       }
       function next(){
-        previousId = nextId;
-        do {
-          nextId = parseInt(Math.random()*artworks.length);
-        }while(nextId == previousId);
-        console.log('nextId', nextId);
-        setArtworkForId(nextId);
+        $.get('/next', null, function(data){
+          artwork = JSON.parse(data);
+          console.log(artwork);
+          // previousId = nextId;
+          // console.log('nextId', nextId);
+          setArtwork(artwork);
+        });
       }
-      function setArtworkForId(id) {
-        var a = artworks[id];
+      function setArtwork(a) {
         $img.attr('src', 'static/dist/'+a.url);
         $title.html(a.title);
       }
