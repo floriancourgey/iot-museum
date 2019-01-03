@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Musée salon</title>
+    <link rel="stylesheet" href="static/bootstrap3/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class=" text-center">
+      <div class="row" style="background:black">
+        <img src="" alt="" id="img"
+        style="height:90vh;">
+      </div>
+      <div class="">
+        <h1 id="title"></h1>
+      </div>
+      <div class="row">
+        <button onclick="previous()"><<</button>
+        <button>pause</button>
+        <button>play</button>
+        <button onclick="next()">>></button>
+      </div>
+      <div class="row">
+        Change every
+        <input type="number" value="1" style="width:35px">
+        second
+      </div>
+    </div>
+    <script src="static/jquery/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var artworks = {{artworks|tojson}};
+      var $img = null;
+      var $title = null;
+      var previousId = null;
+      var nextId = null;
+      function previous(){
+        setArtworkForId(previousId);
+      }
+      function next(){
+        previousId = nextId;
+        do {
+          nextId = parseInt(Math.random()*artworks.length);
+        }while(nextId == previousId);
+        console.log('nextId', nextId);
+        setArtworkForId(nextId);
+      }
+      function setArtworkForId(id) {
+        var a = artworks[id];
+        $img.attr('src', 'static/dist/'+a.url);
+        $title.html(a.title);
+      }
+      $(function(){
+        $img = $('#img');
+        $title = $('#title');
+        next();
+        // setTimeout(1000, next());
+      });
+    </script>
+  </body>
+</html>
