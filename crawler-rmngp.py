@@ -2,6 +2,7 @@
 import requests
 import json
 import yaml
+from contextlib import suppress
 config = yaml.safe_load(open("config.yml"))
 
 headers = {'ApiKey': config['rmngp']['api_key']}
@@ -11,16 +12,10 @@ artworks = json.loads(r.text)['hits']['hits']
 for artwork in artworks:
     o = {}
     a = artwork['_source']
-    try:
+    with suppress (KeyError, IndexError):
         o['title'] = a['title']['fr']
-    except (KeyError, IndexError):
-        pass
-    try:
+    with suppress (KeyError, IndexError):
         o['author'] = a['authors'][0]['name']['fr']
-    except (KeyError, IndexError):
-        pass
-    try:
+    with suppress (KeyError, IndexError):
         o['href'] = a['images'][0]['urls']['original']
-    except (KeyError, IndexError):
-        pass
     print(o)
