@@ -2,8 +2,10 @@
 import requests
 import json
 import random
+import yaml
+config = yaml.safe_load(open("config.yml"))
 
-headers = {'X-Xapp-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTU0Njk2OTUzNiwiaWF0IjoxNTQ2MzY0NzM2LCJhdWQiOiI1YzJiYTc0MGNkNjA5MTVkNjU4YzgyY2IiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWMyYmE3NDA1MTIyNGIzNGUyYTA0N2IyIn0.SzQFRFIam0XpVVZ5SkUFcoG5iek1YwOGuTThl-1_EBA'}
+headers = {'X-Xapp-Token': config['artsy']['x_xapp_token']}
 r = requests.get('https://api.artsy.net/api/artworks', headers=headers)
 idx = range(random.randint(1,5))
 print('Rand:', idx)
