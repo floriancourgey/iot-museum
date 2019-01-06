@@ -9,10 +9,11 @@
     <div class=" text-center">
       <div class="row" style="background:black">
         <img src="" alt="" id="img"
-        style="height:90vh;">
+        style="height:80vh;">
       </div>
       <div class="">
-        <h1 id="title"></h1>
+        <h1 id="name"></h1>
+        <h2 id="author"></h2>
       </div>
       <div class="row">
         <button onclick="previous()"><<</button>
@@ -32,15 +33,15 @@
     <script src="static/jquery/jquery.min.js" charset="utf-8"></script>
     <script type="text/javascript">
       var $img = null;
-      var $title = null;
+      var $name = null;
+      var $author = null;
       var previousId = null;
       var nextId = null;
       function previous(){
         setArtworkForId(0); // todo, but how??
       }
       function next(){
-        $.get('/next', null, function(data){
-          artwork = JSON.parse(data);
+        $.get('/next', null, function(artwork){
           console.log(artwork);
           // previousId = nextId;
           // console.log('nextId', nextId);
@@ -48,12 +49,14 @@
         });
       }
       function setArtwork(a) {
-        $img.attr('src', 'static/dist/'+a.url);
-        $title.html(a.title);
+        $img.attr('src', a.url);
+        $name.html(a.name);
+        $author.html(a.author);
       }
       $(function(){
         $img = $('#img');
-        $title = $('#title');
+        $name = $('#name');
+        $author = $('#author');
         next();
         // setTimeout(1000, next());
       });
