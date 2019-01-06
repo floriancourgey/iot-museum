@@ -2,8 +2,7 @@
 import requests
 import json
 import random
-import yaml
-config = yaml.safe_load(open("config.yml"))
+from config import config
 
 headers = {'X-Xapp-Token': config['artsy']['x_xapp_token']}
 r = requests.get('https://api.artsy.net/api/artworks', headers=headers)
