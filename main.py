@@ -1,34 +1,23 @@
 #!/usr/bin/env python3
+import jsons
 import random
-from flask import Flask
-from flask import render_template
-import json
+from flask import Flask, render_template, jsonify
+from models import app, db, Artwork
 
-app = Flask(__name__)
+numberOfArtworks = db.session.query(Artwork).count()
 
 @app.route('/')
 def index():
-    return render_template('index.html',
-        artworks=getArtworks()
-    )
+    return render_template('index.html', numberOfArtworks=numberOfArtworks)
 @app.route('/next')
 def next():
-    artworks = getArtworks()
-    nextIndex = random.randint(0, len(artworks)-1)
-    artworks[nextIndex]['played'] += 1
-    return json.dumps(artworks[nextIndex])
+    offset = random.randint(0, numberOfArtworks-1)
+    artwork = db.session.query(Artwork).limit(1).offset(offset).first().as_dict()
+    # artworks[nextIndex]['played'] += 1
+    return jsonify(artwork)
 @app.route('/get/<int:id>')
 def get():
     pass
-
-def getArtworks():
-    return [
-        {'url':'medium.jpg','author':'','title':'Isenheim Altarpiece','played':0},
-        {'url':'medium(1).jpg','author':'','title':'The Tête à Tête','played':0},
-        {'url':'medium(2).jpg','author':'','title':'La Grande Odalisque','played':0},
-        {'url':'medium(3).jpg','author':'','title':'Olympia','played':0},
-        {'url':'medium(4).jpg','author':'','title':'Le Berceau (The Cradle)','played':0},
-    ]
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
