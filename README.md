@@ -48,4 +48,4 @@ Edit `config.yml`.
 ## Access db via GUI
 Download [Sqlectron GUI](https://sqlectron.github.io/) and use the .db filepath as the "Initial Database":
 
-![Sqlectron configuration.jpg](/docs/Sqlectron configuration.jpg)
+![Sqlectron configuration](/docs/sqlectron-configuration.jpg)
