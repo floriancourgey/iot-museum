@@ -37,16 +37,21 @@
       var $author = null;
       var previousId = null;
       var nextId = null;
+      var timeoutId = null;
       function previous(){
         setArtworkForId(0); // todo, but how??
       }
       function next(){
+        console.log('next() called');
         $.get('/next', null, function(artwork){
           console.log(artwork);
-          // previousId = nextId;
-          // console.log('nextId', nextId);
           setArtwork(artwork);
         });
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(function(){
+          console.log('setTimeout() called');
+          next();
+        }, 10*1000);
       }
       function setArtwork(a) {
         $img.attr('src', a.url);
@@ -58,7 +63,6 @@
         $name = $('#name');
         $author = $('#author');
         next();
-        // setTimeout(1000, next());
       });
     </script>
   </body>
