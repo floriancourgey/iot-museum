@@ -29,3 +29,18 @@ $ ./main.py
 
 ## Config
 Edit `config.yml`.
+
+## Project overview
+- Project structure
+```python
+- crawler-*.py # python crawlers to feed database with artworks
+- main.py # starts the server on localhost:5000
+- static/ # hosts the CSS+JS files
+- templates/ # hosts the html template
+```
+
+- Server overview
+```python
+/ # displays the main page with the artwork and a call every 5 sec to /next
+/ next # fetches a random artwork and display it as a JSON response
+```
