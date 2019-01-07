@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import jsons
 import random
 from flask import Flask, render_template, jsonify
 from models import app, db, Artwork
