@@ -44,3 +44,8 @@ Edit `config.yml`.
 / # displays the main page with the artwork and a call every 5 sec to /next
 / next # fetches a random artwork and display it as a JSON response
 ```
+
+## Access db via GUI
+Download [Sqlectron GUI](https://sqlectron.github.io/) and use the .db filepath as the "Initial Database":
+
+![Sqlectron configuration.jpg](/docs/Sqlectron configuration.jpg)
