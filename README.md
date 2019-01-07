@@ -10,15 +10,15 @@ Python 3.7.0
 - Download the sources (on github, "Clone or download" > "Download ZIP").
 - Extract
 - Open a terminal in the extracted folder
-- Follow instructions below, depending on your system
+- Follow instructions below, depending on your system:
 
-## Windows instructions
+### Windows instructions
 ```bash
 $ pip install -r requirements.txt
 $ python main.py
 ```
 
-## Linux, Mac instructions
+### Linux, Mac instructions
 ```bash
 $ pip3 install -r requirements.txt
 $ chmod +x main.py
