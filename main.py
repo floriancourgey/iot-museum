@@ -11,9 +11,13 @@ def index():
     return render_template('index.html', numberOfArtworks=numberOfArtworks)
 @app.route('/next')
 def next():
+    #  get random artwork
     offset = random.randint(0, numberOfArtworks-1)
-    artwork = db.session.query(Artwork).limit(1).offset(offset).first().as_dict()
-    # artworks[nextIndex]['played'] += 1
+    artwork = db.session.query(Artwork).order_by(Artwork.timesPlayed).limit(1).offset(offset).first().as_dict()
+    # increment timesPlayed
+    db.session.query(Artwork).filter_by(id=artwork['id']).update({'timesPlayed': Artwork.timesPlayed + 1})
+    db.session.commit()
+    # return as json
     return jsonify(artwork)
 @app.route('/get/<int:id>')
 def get():
