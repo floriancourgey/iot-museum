@@ -16,10 +16,10 @@
         <h2 id="author"></h2>
       </div>
       <div class="row">
-        <button onclick="previous()"><<</button>
-        <button>pause</button>
-        <button>play</button>
-        <button onclick="next()">>></button>
+        <button onclick="previous()" class="btn btn-default btn-sm"><<</button>
+        <button onclick="pause()" id="pause" class="btn btn-default btn-sm">pause</button>
+        <button onclick="play()" id="play" class="btn btn-default btn-sm">play</button>
+        <button onclick="next()" class="btn btn-default btn-sm">>></button>
       </div>
       <div class="row">
         Change every
@@ -36,11 +36,23 @@
       var $name = null;
       var $author = null;
       var $timeoutInterval = null;
+      var $pause = null;
+      var $play = null;
       var previousId = null;
       var nextId = null;
       var timeoutId = null;
       function previous(){
         setArtworkForId(0); // todo, but how??
+      }
+      function pause(){
+        $pause.hide();
+        $play.show();
+        clearTimeout(timeoutId);
+      }
+      function play(){
+        $play.hide();
+        $pause.show();
+        next();
       }
       function next(){
         console.log('next() called');
@@ -58,6 +70,7 @@
           console.log('setTimeout() called');
           next();
         }, timeoutInterval*1000);
+        console.log('next() timeoutId='+timeoutId);
       }
       function setArtwork(a) {
         $img.attr('src', a.url);
@@ -69,7 +82,9 @@
         $name = $('#name');
         $author = $('#author');
         $timeoutInterval = $('#timeoutInterval');
-        next();
+        $pause = $('#pause');
+        $play = $('#play');
+        play();
       });
     </script>
   </body>
