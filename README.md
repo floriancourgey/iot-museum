@@ -25,5 +25,7 @@ $ chmod +x main.py
 $ ./main.py
 ```
 
+- Open up a browser and go to `http://localhost:5000`
+
 ## Config
 Edit `config.yml`.
