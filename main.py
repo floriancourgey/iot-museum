@@ -20,8 +20,9 @@ def next():
     # return as json
     return jsonify(artwork)
 @app.route('/get/<int:id>')
-def get():
-    pass
+def get(id):
+    artwork = db.session.query(Artwork).get(id).as_dict()
+    return jsonify(artwork)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=config['app']['server_port'])
