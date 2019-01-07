@@ -1,5 +1,7 @@
-SQLALCHEMY_DATABASE_URI: 'sqlite:///museum.db'
+app:
+  server_port: 5000
+  sql_connection_string: 'sqlite:///museum.db'
 artsy:
-  x_xapp_token: 
+  x_xapp_token:
 rmngp:
   apikey:

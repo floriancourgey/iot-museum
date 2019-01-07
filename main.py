@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import random
 from flask import Flask, render_template, jsonify
+from config import config
 from models import app, db, Artwork
 
 numberOfArtworks = db.session.query(Artwork).count()
@@ -19,4 +20,4 @@ def get():
     pass
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0',port=config['app']['server_port'])
