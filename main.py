@@ -4,15 +4,17 @@ from flask import Flask, render_template, jsonify
 from config import config
 from models import app, db, Artwork
 
-numberOfArtworks = db.session.query(Artwork).count()
-
 @app.route('/')
 def index():
+    numberOfArtworks = db.session.query(Artwork).count()
     return render_template('index.html', numberOfArtworks=numberOfArtworks)
 @app.route('/next')
 def next():
-    #  get random artwork
-    offset = random.randint(0, numberOfArtworks-1)
+    # get count of smallest "timesPlayed"
+    smallestTimesPlayed = db.session.query(Artwork).order_by(Artwork.timesPlayed).limit(1).first().timesPlayed
+    countOfSmallest = db.session.query(Artwork).filter_by(timesPlayed=smallestTimesPlayed).count()
+    # get random artwork
+    offset = random.randint(0, countOfSmallest-1)
     artwork = db.session.query(Artwork).order_by(Artwork.timesPlayed).limit(1).offset(offset).first().as_dict()
     # increment timesPlayed
     db.session.query(Artwork).filter_by(id=artwork['id']).update({'timesPlayed': Artwork.timesPlayed + 1})
