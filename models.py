@@ -15,6 +15,6 @@ class Artwork(db.Model):
     url = db.Column(db.String(255), unique=True)
     name = db.Column(db.String(255))
     author = db.Column(db.String(255))
-    timesPlayed = db.Column(db.Integer, nullable=False)
+    timesPlayed = db.Column(db.Integer, nullable=False, default=0)
     def as_dict(self):
        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
