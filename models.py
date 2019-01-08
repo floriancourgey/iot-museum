@@ -18,3 +18,5 @@ class Artwork(db.Model):
     timesPlayed = db.Column(db.Integer, nullable=False, default=0)
     def as_dict(self):
        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+    def __str__(self):
+        return '"'+self.name+'" by '+str(self.author)+' (id '+str(self.id)+' - url '+self.url+' )'
