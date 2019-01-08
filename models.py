@@ -16,6 +16,9 @@ class Artwork(db.Model):
     name = db.Column(db.String(255))
     author = db.Column(db.String(255))
     timesPlayed = db.Column(db.Integer, nullable=False, default=0)
+    # origin = db.Column(db.String(255))
+    # created_datetime = db.Column(db.DateTime, default=db.datetime.datetime.utcnow)
+    # edited_datetime = db.Column(db.DateTime, default=db.datetime.datetime.utcnow)
     def as_dict(self):
        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
     def __str__(self):

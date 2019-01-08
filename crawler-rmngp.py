@@ -15,7 +15,7 @@ for i in range(31,40):
     artworks = json.loads(r.text)['hits']['hits']
 
     for artwork in artworks:
-        o = Artwork()
+        o = Artwork()#origin='rmngp')
         a = artwork['_source']
         with suppress (KeyError, IndexError):
             o.name = a['title']['fr']
