@@ -1,14 +1,22 @@
+// if of the tiemout process (to be stopped when Pause)
+var timeoutId = null;
+// array of displayed artwork
+var artworkHistory = [];
+// jquery objects
 var $img = null;
 var $name = null;
 var $author = null;
 var $timeoutInterval = null;
 var $pause = null;
 var $play = null;
-var previousId = null;
-var nextId = null;
-var timeoutId = null;
+// functions
 function previous(){
-  setArtworkForId(0); // todo, but how??
+  pause();
+  if(artworkHistory.length < 1){
+    return;
+  }
+  artwork = artworkHistory.pop();
+  setArtwork(artwork);
 }
 function pause(){
   $pause.hide();
@@ -25,6 +33,7 @@ function next(){
   $.get(urlNext, null, function(artwork){
     console.log(artwork);
     setArtwork(artwork);
+    artworkHistory.push(artwork);
   });
   clearTimeout(timeoutId);
   timeoutInterval = parseInt($timeoutInterval.val());
