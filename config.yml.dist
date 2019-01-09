@@ -1,7 +1,0 @@
-app:
-  server_port: 5000
-  sql_connection_string: 'sqlite:///museum.db'
-artsy:
-  x_xapp_token:
-rmngp:
-  apikey:

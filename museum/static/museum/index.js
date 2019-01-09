@@ -22,7 +22,7 @@ function play(){
 }
 function next(){
   console.log('next() called');
-  $.get('/next', null, function(artwork){
+  $.get(urlNext, null, function(artwork){
     console.log(artwork);
     setArtwork(artwork);
   });
