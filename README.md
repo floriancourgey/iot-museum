@@ -62,3 +62,11 @@ Go to http://localhost:8000/admin and connect with admin/admin.
 Download [Sqlectron GUI](https://sqlectron.github.io/) and use the .db filepath as the "Initial Database":
 
 ![Sqlectron configuration](/docs/sqlectron-configuration.jpg)
+
+## Flask vs Django
+Django is better for:
+- SQLite migration (unable to easily edit a column with Flask)
+- Models accessible easily in Django Commands (similar to Symfony Commands)
+- Admin interface on /admin
+- Lighter ORM syntax
+
