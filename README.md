@@ -14,29 +14,39 @@ Python 3.7.0
 
 ### Windows instructions
 ```bash
-$ pip install -r requirements.txt
-$ python main.py
+> pip install -r requirements.txt
+> # todo
 ```
 
 ### Linux, Mac instructions
 ```bash
 $ pip3 install -r requirements.txt
-$ chmod +x main.py
-$ ./main.py
+$ python3 manage.py runserver
 ```
 
-- Open up a browser and go to `http://localhost:5000`
+- Open up a browser and go to `http://localhost:8000`
+
+## Django management commands
+```bash
+$ manage.py makemigrations # creates .py files
+$ manage.py migrate # execute migrations to db
+$ manage.py crawler_rmngp # starts crawler
+```
 
 ## Config
-Edit `config.yml`.
+Edit `settings.py` and `.env`.
 
 ## Project overview
 - Project structure
 ```python
-- main.py # starts the server on localhost:5000
-- static/ # hosts the CSS+JS files
-- templates/ # hosts the html template
-- crawler-*.py # python crawlers to feed database with artworks
+- settings.py # project-wide settings
+- museum/ # hosts the CSS+JS files
+  - management/ # crawlers as Django commands
+  - migrations/ # db updates
+  - static/ # static CSS+JS files
+  - templates/ # html
+  - models.py # entity definition
+  - views.py # controller
 ```
 
 - Server overview
@@ -44,6 +54,9 @@ Edit `config.yml`.
 / # displays the main page with the artwork and a call every 5 sec to /next
 /next # fetches a random artwork and display it as a JSON response
 ```
+
+## Access db via web Admin
+Go to http://localhost:8000/admin and connect with admin/admin.
 
 ## Access db via GUI
 Download [Sqlectron GUI](https://sqlectron.github.io/) and use the .db filepath as the "Initial Database":
