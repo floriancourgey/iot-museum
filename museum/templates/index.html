@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Musée salon</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
+  </head>
+  <body class="container-fluid">
+    <main class="row text-center text-light" style="background:black">
+      <div class="col">
+        <div class="">
+          <img class="" src="" alt="" id="img" style="height:80vh;">
+        </div>
+        <div class="">
+          <h1 id="name"></h1>
+          <h2 id="author"></h2>
+        </div>
+        <div class="">
+          <button onclick="previous()" class="btn btn-light btn-sm"><<</button>
+          <button onclick="pause()" id="pause" class="btn btn-light btn-sm">pause</button>
+          <button onclick="play()" id="play" class="btn btn-light btn-sm">play</button>
+          <button onclick="next()" class="btn btn-light btn-sm">>></button>
+        </div>
+        <div class="">
+          Change every
+          <input type="number" value="10" style="width:35px" id="timeoutInterval">
+          second
+        </div>
+        <div class="mb-4">
+          Fetching among a total of {{numberOfArtworks}} artworks.
+        </div>
+      </div>
+    </main>
+    <footer class="row bg-dark text-center text-light p-4">
+      <div class="col">
+        <div class="">
+          <img src="{% static 'iot-museumx64.png' %}"/>
+          Iot Museum developed by <a href="https://floriancourgey.com?ref=iot-museum" target="_blank">floriancourgey.com</a>
+        </div>
+        <div class="">
+          Visit <a href="{% url 'admin:index' %}">admin</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{% static 'jquery-3.2.1/jquery.min.js' %}" charset="utf-8"></script>
+    <script type="text/javascript">
+      var urlNext = '{% url 'next' %}';
+    </script>
+    <script src="{% static 'index.js' %}" charset="utf-8"></script>
+  </body>
+</html>

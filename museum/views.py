@@ -6,7 +6,7 @@ import random
 from django.conf import settings
 
 def index(request):
-    return render(request, 'artworks/index.html', {
+    return render(request, 'index.html', {
         'numberOfArtworks': Artwork.objects.count()
     })
 def next(request):
