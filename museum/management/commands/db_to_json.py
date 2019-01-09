@@ -12,7 +12,7 @@ class Command(BaseCommand):
             del artwork['created_datetime']
             del artwork['edited_datetime']
             artworks.append(artwork)
-        f = open('docs/artworks.json', 'w')
+        f = open('docs/artworks.js', 'w')
         rawJson = json.dumps(artworks)
-        f.write(rawJson)
+        f.write('var artworks = '+rawJson)
         self.stdout.write(self.style.SUCCESS('Success'))

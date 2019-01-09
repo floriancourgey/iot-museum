@@ -1,8 +1,3 @@
-var artworks = [];
-$.getJSON('artworks.json', function(data){
-  artworks = data;
-  play();
-});
 // if of the tiemout process (to be stopped when Pause)
 var timeoutId = null;
 // array of displayed artwork
@@ -63,5 +58,5 @@ $(function(){
   $timeoutInterval = $('#timeoutInterval');
   $pause = $('#pause');
   $play = $('#play');
-  //play();
+  play();
 });
