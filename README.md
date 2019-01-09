@@ -1,4 +1,3 @@
-![](/museum/static/iot-museumx64.png) IoT Museum by [floriancourgey.com](floriancourgey.com?ref=iot-museum)
 # IoT Museum
 Display random artworks on any screen. Meant to be used with a Raspberry Pi linked to a monitor for an in-house museum.
 
@@ -16,8 +15,10 @@ Python 3.7.0
 ### Windows instructions
 ```bash
 > pip install -r requirements.txt
-> # todo
+> python manage.py runserver
 ```
+
+- Open up a browser and go to `http://localhost:8000`
 
 ### Linux, Mac instructions
 ```bash
@@ -70,4 +71,3 @@ Django is better for:
 - Models accessible easily in Django Commands (similar to Symfony Commands)
 - Admin interface on /admin
 - Lighter ORM syntax
-
