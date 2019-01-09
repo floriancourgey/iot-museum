@@ -1,5 +1,5 @@
 from django.core import serializers
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.views import View
 from .models import Artwork
@@ -25,3 +25,7 @@ class Next(View):
         artwork.save()
         # return as json
         return JsonResponse(artwork.as_dict())
+class Reset(View):
+    def get(self, request):
+        Artwork.objects.all().update(timesPlayed=0)
+        return HttpResponse('OK')
