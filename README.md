@@ -1,3 +1,5 @@
+![](/docs/splash.jpg)
+
 ![](/museum/static/iot-museumx64.png) IoT Museum by [floriancourgey.com](floriancourgey.com?ref=iot-museum)
 
 # IoT Museum
