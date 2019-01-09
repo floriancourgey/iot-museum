@@ -1,6 +1,6 @@
 ![](/docs/splash.jpg)
 
-![](/museum/static/iot-museumx64.png) IoT Museum by [floriancourgey.com](floriancourgey.com?ref=iot-museum)
+![](/museum/static/iot-museumx64.png) IoT Museum by [floriancourgey.com](https://floriancourgey.com?ref=iot-museum)
 
 # IoT Museum
 Display random artworks on any screen. Meant to be used with a Raspberry Pi linked to a monitor for an in-house museum.
@@ -59,6 +59,7 @@ Edit `settings.py` and `.env`.
 ```python
 / # displays the main page with the artwork and a call every 5 sec to /next
 /next # fetches a random artwork and display it as a JSON response
+/reset # reset all timesPlayed to 0
 ```
 
 ## Access db via web Admin
