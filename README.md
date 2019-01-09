@@ -1,3 +1,4 @@
+![](/museum/static/iot-museumx64.png) IoT Museum by [floriancourgey.com](floriancourgey.com?ref=iot-museum)
 # IoT Museum
 Display random artworks on any screen. Meant to be used with a Raspberry Pi linked to a monitor for an in-house museum.
 
