@@ -18,7 +18,7 @@ Python 3.7.0
 > python manage.py runserver
 ```
 
-- Open up a browser and go to `http://localhost:8000`
+- Open up a browser and go to http://localhost:8000.
 
 ### Linux, Mac instructions
 ```bash
@@ -26,7 +26,7 @@ $ pip3 install -r requirements.txt
 $ python3 manage.py runserver
 ```
 
-- Open up a browser and go to `http://localhost:8000`
+- Open up a browser and go to http://localhost:8000.
 
 ## Django management commands
 ```bash
@@ -55,10 +55,11 @@ Edit `settings.py` and `.env`.
 ```python
 / # displays the main page with the artwork and a call every 5 sec to /next
 /next # fetches a random artwork and display it as a JSON response
+/reset # reset all timesPlayed to 0
 ```
 
 ## Access db via web Admin
-Go to http://localhost:8000/admin and connect with admin/admin.
+Go to http://localhost:8000/admin and connect with `admin`/`admin`.
 
 ## Access db via GUI
 Download [Sqlectron GUI](https://sqlectron.github.io/) and use the .db filepath as the "Initial Database":
