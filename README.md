@@ -5,6 +5,8 @@
 # IoT Museum
 Display random artworks on any screen. Meant to be used with a Raspberry Pi linked to a monitor for an in-house museum.
 
+*Demo available at https://floriancourgey.github.io/iot-museum.*
+
 ## General instructions
 - Make sure to have python 3 installed. You can get it from https://www.python.org/downloads/. Check the installation with `python --version` in a terminal:
 ```bash
