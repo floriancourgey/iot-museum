@@ -9,6 +9,7 @@ class Artwork(models.Model):
     author = models.CharField(max_length=255)
     timesPlayed = models.IntegerField(default=0)
     origin = models.CharField(max_length=255)
+    active = models.BooleanField(default=True)
     def as_dict(self):
         d = self.__dict__
         del d['_state']
