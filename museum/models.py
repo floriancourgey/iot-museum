@@ -15,4 +15,4 @@ class Artwork(models.Model):
         del d['_state']
         return d
     def __str__(self):
-        return '"'+self.name+'" by '+str(self.author)+' ( '+self.url+' )'
+        return '"'+self.name+'" by '+str(self.author)
