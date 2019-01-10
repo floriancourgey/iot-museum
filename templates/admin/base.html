@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+
+{% block messages %}
+{% if has_permission %}
+  <div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a> -
+    <a href="/admin/museum/artwork/">Museum & artworks</a> -
+    <a href="/admin/museum/artwork/rmngp/">Add artwork from RMNGP</a>
+  </div>
+{% endif %}
+{{block.super}}
+{% endblock %}
