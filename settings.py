@@ -11,6 +11,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'museum',
     'crawler_rmngp',
+    'crawler_metmuseum',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
