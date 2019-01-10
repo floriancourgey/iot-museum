@@ -1,10 +1,8 @@
-from django.core import serializers
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.views import View
 from .models import Artwork
 import random
-from django.conf import settings
 
 class Index(View):
     def get(self, request):
