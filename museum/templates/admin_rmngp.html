@@ -1,5 +1,70 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
-hello
+<div id="app">
+  <div style="float:left">
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Recherche globale</td>
+          <td><input v-model="params.q"></td>
+        </tr>
+        <tr>
+          <td>Auteur</td>
+          <td><input v-model="params['facets[authors]']"></td>
+        </tr>
+        <tr>
+          <td>Langage</td>
+          <td><input v-model="params.lang"></td>
+        </tr>
+        <tr>
+          <td>Nombre de resultats</td>
+          <td><input v-model="params.per_page"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" v-on:click="search">Search</button>
+  </div>
+  <ol class="">
+    <li v-for="artwork in artworks">abc</li>
+  </ol>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    data: {
+      params: {
+        lang: 'fr',
+        per_page: 15,
+      },
+      artworks: [],
+    },
+    methods:{
+      search: function(){
+        var query = Object.keys(app.params)
+          .map(function(k){ return k + '=' + app.params[k] })
+          .join('&');
+        var url =
+        $.ajax({
+          url: 'https://api.art.rmngp.fr/v1/works?'+query,
+          type: "GET",
+          beforeSend: function(xhr){xhr.setRequestHeader('ApiKey', '{{RMNGP_API_KEY}}');},
+          success: function(data) {
+            console.log(data);
+            app.artworks = data['hits']['hits'];
+          }
+        });
+      }
+    }
+  })
+</script>
 {% endblock %}
