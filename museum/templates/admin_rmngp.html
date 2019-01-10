@@ -99,7 +99,7 @@
           <td>{[{ getName(a, 'fr') }]}</td>
           <td>{[{ getDate(a) }]}</td>
           <td style="text-align:center;">
-            <img v-bind:src="getImage(a)" height="50"/>
+            <img class="artwork" v-bind:src="getImage(a)" height="50"/>
           </td>
           <td>{[{ parseInt(a._score) }]}</td>
         </tr>
@@ -135,7 +135,7 @@
         q: '',
         'facets[techniques]': '',
         'facets[periods]': '',
-        'facets[collections]': '',
+        'facets[collections]': 'Peintures',
       },
       paramsAuthor: {
         q: 'van gogh',
@@ -184,6 +184,14 @@
           success: function(data) {
             console.log(data);
             app.artworks = data['hits']['hits'];
+            setTimeout(function(){
+              $('.artwork').elevateZoom({
+                zoomWindowPosition: 10,
+                zoomWindowWidth: 900, //400
+                zoomWindowHeight: 600, // 400
+              });
+              console.log('elevateZoom OK');
+            }, 3000);
           }
         });
       },
