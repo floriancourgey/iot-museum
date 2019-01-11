@@ -24,4 +24,4 @@ class ArtworkAdmin(admin.ModelAdmin):
            self.admin_site.each_context(request),
            RMNGP_API_KEY=RMNGP_API_KEY,
         )
-        return TemplateResponse(request, "admin_rmngp.html", context)
+        return TemplateResponse(request, "museum/admin/rmngp.html", context)

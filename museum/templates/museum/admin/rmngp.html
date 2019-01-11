@@ -1,0 +1,123 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-grid.min.css">
+
+<div id="app" class="row">
+  <div class="col-md-3">
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Recherche globale</td>
+          <td><input v-model="paramsArtwork.q"></td>
+        </tr>
+        <tr>
+          <td>Auteur</td>
+          <td><input v-model="paramsArtwork['facets[authors]']"></td>
+        </tr>
+        <tr>
+          <td>Period</td>
+          <td>
+            <select v-model="paramsArtwork['facets[periods]']">
+              <option v-for="p in periods" v-bind:value="p.value">{[{p.text}]}</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Type</td>
+          <td>
+            <select v-model="paramsArtwork['facets[collections]']">
+              <option v-for="c in collections" v-bind:value="c.value">{[{c.text}]}</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Technique</td>
+          <td>
+            <select v-model="paramsArtwork['facets[techniques]']">
+              <option v-for="t in techniques" v-bind:value="t.value">{[{t.text}]}</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Langage</td>
+          <td><input v-model="paramsArtwork.lang"></td>
+        </tr>
+        <tr>
+          <td>Nombre de resultats</td>
+          <td><input v-model="paramsArtwork.per_page"></td>
+        </tr>
+        <tr>
+          <td>Page</td>
+          <td><input v-model="paramsArtwork.page"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" v-on:click="searchArtwork">Search artwork</button>
+    <br><br>
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Recherche globale</td>
+          <td><input v-model="paramsAuthor.q"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" v-on:click="searchAuthor">Search author</button>
+    <div v-for="a in authors">
+      {[{ a._source.name.fr }]} - {[{ a._score }]}
+    </div>
+  </div>
+  <div class="col-md-9">
+    <table style="width:100%;">
+      <thead>
+        <tr>
+          <th>Add to db</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Date</th>
+          <th>Image</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="a in artworks">
+          <td><input type="checkbox"/></td>
+          <td>{[{ getTitle(a, 'fr') }]}</td>
+          <td>{[{ getName(a, 'fr') }]}</td>
+          <td>{[{ getDate(a) }]}</td>
+          <td style="text-align:center;">
+            <img class="artwork" v-bind:src="getImage(a)" height="50"/>
+          </td>
+          <td>{[{ parseInt(a._score) }]}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-show="artworks.length < 1" style="padding:15px;text-align:center;">
+      No artwork found.
+    </div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@zeitiger/elevatezoom@2.5.4/jquery.elevatezoom.min.js"></script>
+<script type="text/javascript">
+  var RMNGP_API_KEY = '{{RMNGP_API_KEY}}';
+</script>
+<script src="{% static 'admin/index.js' %}" charset="utf-8"></script>
+{% endblock %}
