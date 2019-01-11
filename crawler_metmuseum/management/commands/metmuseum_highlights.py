@@ -24,7 +24,7 @@ class Command(BaseCommand):
             'pageSize': '0',
             'perPage': '20',
             'searchField': 'All',
-            'showOnly': 'highlights', # important!
+            'showOnly': 'highlights|withImage|openAccess', # important!
             'sortBy': 'relevance',
             'sortOrder': 'asc',
         }
