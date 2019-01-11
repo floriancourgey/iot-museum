@@ -48,7 +48,7 @@ function next(){
   console.log('next() timeoutId='+timeoutId);
 }
 function setArtwork(a) {
-  $img.attr('src', a.url);
+  $img.css('background-image', 'url('+a.url+')');
   $name.html(a.name);
   $author.html(a.author);
 }

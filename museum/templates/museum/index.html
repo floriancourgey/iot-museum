@@ -6,13 +6,19 @@
     <title>Musée salon</title>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
+    <style media="screen">
+    #img {
+      height:80vh;
+      background-size:contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    </style>
   </head>
   <body class="container-fluid">
     <main class="row text-center text-light" style="background:black">
       <div class="col">
-        <div class="" style="height:80vh;">
-          <img class="" src="" alt="" id="img" style="height:80vh;">
-        </div>
+        <div id="img"></div>
         <div class="">
           <h1><span id="name"></span>&nbsp;</h1>
           <h2><span id="author"></span>&nbsp;</h2>
