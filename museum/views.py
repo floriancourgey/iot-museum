@@ -6,7 +6,7 @@ import random
 
 class Index(View):
     def get(self, request):
-        return render(request, 'index.html', {
+        return render(request, 'museum/index.html', {
             'numberOfArtworks': Artwork.objects.filter(active=1).count()
         })
 
