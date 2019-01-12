@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import Artwork
 from django.urls import path
 from django.template.response import TemplateResponse
-from config import *
 
 @admin.register(Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
