@@ -1,10 +1,11 @@
 import os
+from config import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-SECRET_KEY = '#fu%$70a)s0*&sei2b4-00o63ich(@cs&k5zpkb%#_%*ww7x6('
+SECRET_KEY = config['django']['SECRET_KEY']
 
-DEBUG = True
+DEBUG = config['django']['DEBUG']
 
 ALLOWED_HOSTS = []
 
@@ -53,8 +54,10 @@ WSGI_APPLICATION = 'wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': config['django']['database']['ENGINE'],
+        'NAME': config['django']['database']['NAME'],
+        'USER': config['django']['database']['USER'],
+        'PASSWORD': config['django']['database']['PASSWORD'],
     }
 }
 
