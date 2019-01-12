@@ -39,31 +39,33 @@
           </div>
         </div>
         <div class="row m-4">
-          <div class="col-12">
-            <button onclick="previous()" class="btn btn-light btn-sm"><<</button>
-            <button onclick="pause()" id="pause" class="btn btn-light btn-sm">pause</button>
-            <button onclick="play()" id="play" class="btn btn-light btn-sm">play</button>
-            <button onclick="next()" class="btn btn-light btn-sm">>></button>
-          </div>
-          <div class="col-12 my-2">
-            Change every
-            <input type="number" class="p-0 px-1 d-inline-block form-control form-control-sm" value="10" style="width:55px" id="timeoutInterval">
-            second
-          </div>
-          <div class="col-12">
-            Fetching among a total of {{numberOfArtworks}} artworks.
+          <div class="col">
+            <div>
+              <button onclick="previous()" class="btn btn-light btn-sm"><<</button>
+              <button onclick="pause()" id="pause" class="btn btn-light btn-sm">pause</button>
+              <button onclick="play()" id="play" class="btn btn-light btn-sm">play</button>
+              <button onclick="next()" class="btn btn-light btn-sm">>></button>
+            </div>
+            <div class="my-2">
+              Change every
+              <input type="number" class="p-0 px-1 d-inline-block form-control form-control-sm" value="10" style="width:55px" id="timeoutInterval">
+              seconds
+            </div>
+            <div>
+              Fetching among a total of {{numberOfArtworks}} artworks.
+            </div>
           </div>
         </div>
       </div>
     </main>
     <footer class="row bg-dark text-center text-light p-4">
       <div class="col">
-        <div class="">
+        <div class="mb-2">
           <img src="{% static 'iot-museumx64.png' %}"/>
           Iot Museum developed by <a href="https://floriancourgey.com?ref=iot-museum" target="_blank">floriancourgey.com</a>
         </div>
         <div class="">
-          Visit <a href="{% url 'admin:index' %}">admin</a>
+          Visit <a href="{% url 'admin:index' %}">admin</a> to add and edit artworks.
         </div>
         <div class="m-1">
           <a href="{% url 'reset' %}">Reset<a/> times played to 0
