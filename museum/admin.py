@@ -11,6 +11,8 @@ class ArtworkAdmin(admin.ModelAdmin):
     list_per_page = 20
     search_fields = ('name', 'author', 'url')
 
+    change_form_template = 'museum/admin/change_form.html'
+
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [

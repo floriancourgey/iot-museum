@@ -1,0 +1,29 @@
+{% extends "admin/change_form.html" %}
+
+{% load static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
+{% endblock %}
+
+
+{% block field_sets %}
+<div class="row mb-2">
+  <div id="img" class="col-4" style="background-repeat:no-repeat;background-size:contain;">
+    <script type="text/javascript">
+      function update($){
+        $('#img').css('background-image', 'url('+$('#id_url').val()+')');
+      }
+      django.jQuery(function($){
+        $('#id_url').change(function(){
+          update($);
+        });
+        update($);
+      });
+    </script>
+  </div>
+  <div class="col-8">
+    {{block.super}}
+  </div>
+</div>
+{% endblock %}
