@@ -17,7 +17,7 @@ class AnimalTestCase(TestCase):
     def test_next_timesPlayed(self):
         response = self.c.get('/next')
         self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(json.loads(response.content), dict)
+        self.assertIsInstance(response.json(), dict)
         response = self.c.get('/next')
         response = self.c.get('/next')
         self.assertEqual(Artwork.objects.order_by('timesPlayed').first().timesPlayed, 1)
