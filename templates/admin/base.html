@@ -4,8 +4,8 @@
 {% if has_permission %}
   <div class="breadcrumbs">
     <a href="{% url 'admin:index' %}">Home</a> -
-    <a href="/admin/museum/artwork/">Museum & artworks</a> -
-    <a href="/admin/museum/artwork/rmngp/">Add artwork from RMNGP</a>
+    <a href="{% url 'admin:museum_artwork_changelist' %}">Museum & artworks</a> -
+    <a href="{% url 'admin:museum_artwork_changelist' %}rmngp">Add artwork from RMNGP</a>
   </div>
 {% endif %}
 {{block.super}}
