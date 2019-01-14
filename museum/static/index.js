@@ -9,6 +9,7 @@ var $author = null;
 var $timeoutInterval = null;
 var $pause = null;
 var $play = null;
+var $adminLink = null;
 // functions
 function previous(){
   pause();
@@ -51,6 +52,7 @@ function setArtwork(a) {
   $img.css('background-image', 'url('+a.url+')');
   $name.html(a.name);
   $author.html(a.author);
+  $adminLink.attr('href', urlAdminArtwork.replace('1', a.id));
 }
 $(function(){
   $img = $('#img');
@@ -59,5 +61,6 @@ $(function(){
   $timeoutInterval = $('#timeoutInterval');
   $pause = $('#pause');
   $play = $('#play');
+  $adminLink = $('#adminLink');
   play();
 });

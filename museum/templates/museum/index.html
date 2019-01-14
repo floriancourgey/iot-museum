@@ -47,6 +47,9 @@
               <button onclick="next()" class="btn btn-light btn-sm">>></button>
             </div>
             <div class="my-2">
+              <a id="adminLink" target="_blank">Edit in admin</a>
+            </div>
+            <div class="my-2">
               Change every
               <input type="number" class="p-0 px-1 d-inline-block form-control form-control-sm" value="10" style="width:55px" id="timeoutInterval">
               seconds
@@ -76,6 +79,7 @@
     <script src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}" charset="utf-8"></script> <!-- 3.3.1 -->
     <script type="text/javascript">
       var urlNext = '{% url 'next' %}';
+      var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 1 %}';
     </script>
     <script src="{% static 'index.js' %}" charset="utf-8"></script>
   </body>
