@@ -9,7 +9,7 @@ class Artwork(models.Model):
     author = models.CharField(max_length=255)
     timesPlayed = models.IntegerField(default=0) # number of times this artwork has been played
     origin = models.CharField(max_length=255) # origin system (crawler site, backoffice..)
-    origin_id = models.CharField(max_length=255, default=None, null=True) # id in the origin system
+    origin_id = models.CharField(max_length=255, default='', blank=True) # id in the origin system
     active = models.BooleanField(default=True)
 
     def as_dict(self):
@@ -21,13 +21,17 @@ class Artwork(models.Model):
         return '"'+self.name+'" by '+str(self.author)
 
     def existing(self):
-        ''' search by url|name|origin+origin_id'''
+        '''search by url|name|origin+origin_id'''
         a = Artwork.objects.filter(url=self.url).first()
         if a:
             return a
         a = Artwork.objects.filter(name=self.name).first()
         if a:
             return a
+        print(self)
+        print(self.__dict__)
+        print(self.origin)
+        print(self.origin_id)
         if self.origin and self.origin_id:
             a = Artwork.objects.filter(origin=self.origin, origin_id=self.origin_id).first()
             if a:
