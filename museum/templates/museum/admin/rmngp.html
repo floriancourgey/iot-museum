@@ -135,20 +135,9 @@
 
 <script type="text/javascript">
   var RMNGP_API_KEY = '{{RMNGP_API_KEY}}';
-  var csrftoken = null;
-  function csrfSafeMethod(method) {
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));// these HTTP methods do not require CSRF protection
+  if(!RMNGP_API_KEY || RMNGP_API_KEY.length < 1){
+    alert('A Rmn-GP API key is required to use this functionnality.');
   }
-  $(function(){
-    csrftoken = $("[name=csrfmiddlewaretoken]").val();
-    $.ajaxSetup({
-      beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-          xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-      }
-    });
-  });
 </script>
 <script src="{% static 'admin/index.js' %}" charset="utf-8"></script>
 {% endblock %}

@@ -1,3 +1,17 @@
+var csrftoken = null;
+function csrfSafeMethod(method) {
+  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));// these HTTP methods do not require CSRF protection
+}
+$(function(){
+  csrftoken = $("[name=csrfmiddlewaretoken]").val();
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    }
+  });
+});
 function objectToHttpQuery(o){
   return Object.keys(o)
     .filter(function(k){return o[k] && o[k].toString().length > 0; })
