@@ -113,6 +113,7 @@ var app = new Vue({
           name:app.getTitle(a, 'fr'),
           origin:'rmngp',
           url:app.getImage(a),
+          origin_id: a._id,
         };
         console.log('Sending artwork', data);
         $.ajax({

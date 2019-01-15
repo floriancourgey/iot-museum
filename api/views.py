@@ -25,7 +25,7 @@ class ArtworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artwork
         fields = ('id', 'name', 'author', 'url',
-            'origin', 'active',
+            'origin', 'origin_id', 'active',
             'created_datetime')
 class ArtworkViewSet(viewsets.ModelViewSet):
     queryset = Artwork.objects.all()
