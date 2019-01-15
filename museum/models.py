@@ -19,3 +19,17 @@ class Artwork(models.Model):
 
     def __str__(self):
         return '"'+self.name+'" by '+str(self.author)
+
+    def existing(self):
+        ''' search by url|name|origin+origin_id'''
+        a = Artwork.objects.filter(url=self.url).first()
+        if a:
+            return a
+        a = Artwork.objects.filter(name=self.name).first()
+        if a:
+            return a
+        if self.origin and self.origin_id:
+            a = Artwork.objects.filter(origin=self.origin, origin_id=self.origin_id).first()
+            if a:
+                return a
+        return None
