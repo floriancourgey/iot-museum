@@ -1,4 +1,4 @@
-![](/docs/splash.jpg)
+![](/docs/Architecture.jpg)
 
 ![](/museum/static/iot-museumx64.png) IoT Museum by [floriancourgey.com](https://floriancourgey.com?ref=iot-museum)
  &nbsp;[![Build Status](https://travis-ci.com/floriancourgey/iot-museum.svg?branch=master)](https://travis-ci.com/floriancourgey/iot-museum)
