@@ -43,19 +43,22 @@ $ manage.py crawler_rmngp # starts crawler
 ```
 
 ## Config
-Edit `settings.py` and `.env`.
+Edit `settings.py` and `config.py`.
 
 ## Project overview
 - Project structure
 ```python
 - settings.py # project-wide settings
-- museum/ # hosts the CSS+JS files
-  - management/ # crawlers as Django commands
-  - migrations/ # db updates
+- config.py # api keys and database connection
+- museum/ # hosts the main frontend interface
   - static/ # static CSS+JS files
   - templates/ # html
   - models.py # entity definition
   - views.py # controller
+  - admin.py # admin interface
+- crawler_*# crawlers as Django apps containing commands
+- templates # overriden admin templates
+- api # Django REST framework
 ```
 
 - Server overview
@@ -63,6 +66,7 @@ Edit `settings.py` and `.env`.
 / # displays the main page with the artwork and a call every 5 sec to /next
 /next # fetches a random artwork and display it as a JSON response
 /reset # reset all timesPlayed to 0
+/api/ # api from the Django REST framework
 ```
 
 ## Access db via web Admin
@@ -79,3 +83,10 @@ Django is better for:
 - Models accessible easily in Django Commands (similar to Symfony Commands)
 - Admin interface on /admin
 - Lighter ORM syntax
+
+## Screenshots
+### CRUD interface
+![](/docs/admin-edit-artwork.jpg)
+
+### Add artwork from external sources (i.e. https://art.rmngp.fr/fr/)
+![](/docs/admin-add-from-rmngp.jpg)
