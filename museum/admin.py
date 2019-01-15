@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Artwork
 from django.urls import path
 from django.template.response import TemplateResponse
+from config import config
 
 @admin.register(Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
@@ -23,6 +24,6 @@ class ArtworkAdmin(admin.ModelAdmin):
     def rmngp(self, request):
         context = dict(
            self.admin_site.each_context(request),
-           RMNGP_API_KEY=RMNGP_API_KEY,
+           RMNGP_API_KEY=config['rmngp']['api_key'],
         )
         return TemplateResponse(request, "museum/admin/rmngp.html", context)
