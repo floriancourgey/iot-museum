@@ -17,11 +17,9 @@ var app = new Vue({
       'facets[periods]': '',
       'facets[collections]': 'Peintures',
     },
-    paramsAuthor: {
-      q: 'van gogh',
-    },
+    loading: null,
     artworks: [],
-    authors: [],
+    artworksSelected:{}, // {168:{},97:{}..}
     collections: [
       {value: '', text: 'All'},
       {value: 'Dessins', text: 'Dessins (108k)'},
@@ -60,7 +58,12 @@ var app = new Vue({
       $.ajax({
         url: 'https://api.art.rmngp.fr/v1/works?'+query,
         type: "GET",
-        beforeSend: function(xhr){xhr.setRequestHeader('ApiKey', RMNGP_API_KEY);},
+        beforeSend: function(xhr){
+          xhr.setRequestHeader('ApiKey', RMNGP_API_KEY);
+          app.artworks = [];
+          app.artworksIdSelected = {};
+          app.loading = true;
+        },
         success: function(data) {
           console.log(data);
           app.artworks = data['hits']['hits'];
@@ -72,21 +75,34 @@ var app = new Vue({
             });
             console.log('elevateZoom OK');
           }, 3000);
+          app.loading = false;
         }
       });
     },
-    searchAuthor: function(){
-      var query = objectToHttpQuery(app.paramsAuthor);
-      var url =
-      $.ajax({
-        url: 'https://api.art.rmngp.fr/v1/authors?'+query,
-        type: "GET",
-        beforeSend: function(xhr){xhr.setRequestHeader('ApiKey', RMNGP_API_KEY);},
-        success: function(data) {
+    switchSelectedArtwork: function(a){
+      if(a.id in this.artworksSelected){
+        Vue.delete(this.artworksSelected, a._source.id);
+      } else {
+        Vue.set(this.artworksSelected, a._source.id, a);
+      }
+    },
+    addToDb: function(){
+      if(!this.artworksSelected || Object.keys(this.artworksSelected).length<1){
+        return;
+      }
+      // API call
+      for (var i in this.artworksSelected) {
+        var a = this.artworksSelected[i];
+        $.post('/api/artworks/', {
+          author:app.getAuthor(a, 'fr'),
+          name:app.getTitle(a, 'fr'),
+          origin:'rmngp',
+          url:app.getImage(a),
+        }, function(data){
           console.log(data);
-          app.authors = data['hits']['hits'];
-        }
-      });
+        });
+      }
+      this.artworksSelected = {};
     },
     getTitle: function(artwork, lang){
       if(artwork._source && artwork._source.title && artwork._source.title[lang]){
@@ -94,7 +110,7 @@ var app = new Vue({
       }
       return '';
     },
-    getName: function(artwork, lang){
+    getAuthor: function(artwork, lang){
       if(artwork._source && artwork._source.authors.length > 0 && artwork._source.authors[0].name){
         return artwork._source.authors[0].name[lang];
       }
@@ -114,3 +130,26 @@ var app = new Vue({
     }
   }
 });
+var $selectAuthor = null;
+$(function(){
+  $selectAuthor = $('#selectAuthor');
+  $selectAuthor.on("change", function (e) {
+    console.log(this);
+    app.paramsArtwork['facets[authors]'] = this.value;
+  });
+  $selectAuthor.select2({
+    minimumInputLength: 3,
+    ajax: {
+      url: 'https://api.art.rmngp.fr/v1/authors?api_key=8fd7d156f0df1cf441d20328249f5df6140031ecfea6321ad16d3b9cb2d96a76',
+      processResults: function (data) {
+        var results = data.hits.hits.map(function(x){
+          x['id'] = x['_source']['name']['fr'];
+          x['text'] = x['_source']['name']['fr'];//+' '+x['_source']['birth']['display']+'-'+x['_source']['death']['display'];
+          return x;
+        });
+        return {results: results};
+      }
+    }
+  });
+});
+app.searchArtwork();

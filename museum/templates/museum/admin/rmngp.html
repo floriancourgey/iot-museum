@@ -4,10 +4,17 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.6-rc.1/dist/css/select2.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<style media="screen">
+  [type=checkbox] {cursor: pointer;}
+  #artworks-results td {vertical-align:middle}
+</style>
 
 <div id="app" class="row">
-  <div class="col-md-3">
-    <table>
+  <form class="col-md-4" v-on:submit.prevent="searchArtwork">
+    {% csrf_token %}
+    <table class="table table-sm">
       <thead>
         <tr>
           <th>Parameter</th>
@@ -16,12 +23,12 @@
       </thead>
       <tbody>
         <tr>
-          <td>Recherche globale</td>
+          <td>Global search</td>
           <td><input v-model="paramsArtwork.q"></td>
         </tr>
         <tr>
-          <td>Auteur</td>
-          <td><input v-model="paramsArtwork['facets[authors]']"></td>
+          <td>Author</td>
+          <td><select style="width:100%" id="selectAuthor"></select></td>
         </tr>
         <tr>
           <td>Period</td>
@@ -48,76 +55,100 @@
           </td>
         </tr>
         <tr>
-          <td>Langage</td>
+          <td>Language</td>
           <td><input v-model="paramsArtwork.lang"></td>
         </tr>
         <tr>
-          <td>Nombre de resultats</td>
-          <td><input v-model="paramsArtwork.per_page"></td>
+          <td># of results</td>
+          <td><input v-model="paramsArtwork.per_page" type="number"></td>
         </tr>
         <tr>
           <td>Page</td>
-          <td><input v-model="paramsArtwork.page"></td>
+          <td><input v-model="paramsArtwork.page" type="number"></td>
         </tr>
       </tbody>
     </table>
-    <button type="button" v-on:click="searchArtwork">Search artwork</button>
-    <br><br>
-    <table>
-      <thead>
-        <tr>
-          <th>Parameter</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Recherche globale</td>
-          <td><input v-model="paramsAuthor.q"></td>
-        </tr>
-      </tbody>
-    </table>
-    <button type="button" v-on:click="searchAuthor">Search author</button>
-    <div v-for="a in authors">
-      {[{ a._source.name.fr }]} - {[{ a._score }]}
+    <div class="text-center">
+      <button type="submit" class="btn btn-outline-success">
+        Search artworks
+      </button>
     </div>
-  </div>
-  <div class="col-md-9">
-    <table style="width:100%;">
+  </form>
+  <div class="col-md-8">
+    <table id="artworks-results" class="table table-sm">
       <thead>
         <tr>
-          <th>Add to db</th>
+          <th style="width:85px;">Add to db</th>
+          <th>Image</th>
           <th>Title</th>
           <th>Author</th>
           <th>Date</th>
-          <th>Image</th>
           <th>Score</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="a in artworks">
-          <td><input type="checkbox"/></td>
-          <td>{[{ getTitle(a, 'fr') }]}</td>
-          <td>{[{ getName(a, 'fr') }]}</td>
-          <td>{[{ getDate(a) }]}</td>
-          <td style="text-align:center;">
-            <img class="artwork" v-bind:src="getImage(a)" height="50"/>
+          <td class="text-center">
+            <label v-bind:for="'artwork_'+a._source.id" class="btn btn-outline-primary">
+              <input type="checkbox" v-on:click="switchSelectedArtwork(a)"
+                v-bind:id="'artwork_'+a._source.id"/>
+            </label>
           </td>
+          <td class="text-center">
+            <img class="artwork" v-bind:src="getImage(a)"
+              style="max-height:50px;max-width:100px"/>
+          </td>
+          <td>{[{ getTitle(a, 'fr') }]}</td>
+          <td>{[{ getAuthor(a, 'fr') }]}</td>
+          <td>{[{ getDate(a) }]}</td>
           <td>{[{ parseInt(a._score) }]}</td>
         </tr>
       </tbody>
+      <tfoot v-show="loading">
+        <tr>
+          <td colspan="99" class="text-center p-4 text-primary">
+            <i class="far fa-compass fa-spin fa-3x"></i>
+          </td>
+        </tr>
+      </tfoot>
     </table>
-    <div v-show="artworks.length < 1" style="padding:15px;text-align:center;">
-      No artwork found.
+    <div v-show="artworks.length>0 && Object.keys(artworksSelected).length>0"
+      class="card m-auto mb-3" style="max-width: 25rem;">
+      <div class="card-header">Add {[{ Object.keys(artworksSelected).length }]} artworks to the database</div>
+      <div class="card-body">
+        <ul>
+          <li v-for="a in artworksSelected">{[{a._source.title.fr}]}</li>
+        </ul>
+        <div class="text-center">
+          <button v-on:click="addToDb" class="btn btn-success">
+            Add to database
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@zeitiger/elevatezoom@2.5.4/jquery.elevatezoom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.6-rc.1/dist/js/select2.min.js"></script>
+
 <script type="text/javascript">
   var RMNGP_API_KEY = '{{RMNGP_API_KEY}}';
+  var csrftoken = null;
+  function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));// these HTTP methods do not require CSRF protection
+  }
+  $(function(){
+    csrftoken = $("[name=csrfmiddlewaretoken]").val();
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+  });
 </script>
 <script src="{% static 'admin/index.js' %}" charset="utf-8"></script>
 {% endblock %}
