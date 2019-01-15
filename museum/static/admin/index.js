@@ -31,6 +31,8 @@ var app = new Vue({
       'facets[periods]': '',
       'facets[collections]': 'Peintures',
     },
+    artworksCount: 0,
+    authorsCount: 0,
     loading: null,
     artworks: [],
     artworksSelected:{}, // {168:{},97:{}..}
@@ -129,12 +131,19 @@ var app = new Vue({
           async: false,
         });
       }
+      app.refreshCounts();
       var text = '';
-      console.log('artworksSuccessful', artworksSuccessful);
       if(artworksSuccessful.length){
         text += 'The following artworks have been successfully added:\n';
         for(var a of artworksSuccessful){
-          text += '- '+app.getTitle(a, 'fr')+'\n'
+          text += '- '+app.getTitle(a, 'fr')+'\n';
+        }
+      }
+      if(Object.keys(app.artworksSelected).length){
+        text += '\nThe following artworks could not be added:\n';
+        for(var i in app.artworksSelected){
+          var a = app.artworksSelected[i];
+          text += '- '+app.getTitle(a, 'fr')+'\n';
         }
       }
       alert(text);
@@ -162,7 +171,13 @@ var app = new Vue({
         return artwork._source.date.display;
       }
       return '';
-    }
+    },
+    refreshCounts: function(){
+      $.getJSON(urlArtworksCount, function(data){
+        app.artworksCount = data.count;});
+      $.getJSON(urlArtworksAuthorsCount, function(data){
+        app.authorsCount = data.count;});
+    },
   }
 });
 var $selectAuthor = null;
@@ -175,6 +190,7 @@ $(function(){
   $selectAuthor.select2({
     minimumInputLength: 3,
     ajax: {
+      delay: 250,
       url: 'https://api.art.rmngp.fr/v1/authors?api_key=8fd7d156f0df1cf441d20328249f5df6140031ecfea6321ad16d3b9cb2d96a76',
       processResults: function (data) {
         var results = data.hits.hits.map(function(x){
@@ -188,3 +204,4 @@ $(function(){
   });
 });
 app.searchArtwork();
+app.refreshCounts();

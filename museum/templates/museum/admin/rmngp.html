@@ -73,6 +73,9 @@
         Search artworks
       </button>
     </div>
+    <div class="my-4">
+      The database contains <b>{[{artworksCount}]}</b> artworks and {[{authorsCount}]} authors.
+    </div>
   </form>
   <div class="col-md-8">
     <table id="artworks-results" class="table table-sm">
@@ -138,6 +141,8 @@
   if(!RMNGP_API_KEY || RMNGP_API_KEY.length < 1){
     alert('A Rmn-GP API key is required to use this functionnality.');
   }
+  var urlArtworksCount = '{% url 'artwork-count' %}';
+  var urlArtworksAuthorsCount = '{% url 'artwork-authors-count' %}';
 </script>
 <script src="{% static 'admin/index.js' %}" charset="utf-8"></script>
 {% endblock %}
