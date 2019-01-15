@@ -80,10 +80,10 @@ var app = new Vue({
       });
     },
     switchSelectedArtwork: function(a){
-      if(a.id in this.artworksSelected){
-        Vue.delete(this.artworksSelected, a._source.id);
+      if(a._id in this.artworksSelected){
+        Vue.delete(this.artworksSelected, a._id);
       } else {
-        Vue.set(this.artworksSelected, a._source.id, a);
+        Vue.set(this.artworksSelected, a._id, a);
       }
     },
     addToDb: function(){
@@ -91,18 +91,38 @@ var app = new Vue({
         return;
       }
       // API call
+      var artworksSuccessful = [];
       for (var i in this.artworksSelected) {
         var a = this.artworksSelected[i];
-        $.post('/api/artworks/', {
+        var data = {
           author:app.getAuthor(a, 'fr'),
           name:app.getTitle(a, 'fr'),
           origin:'rmngp',
           url:app.getImage(a),
-        }, function(data){
-          console.log(data);
+        };
+        console.log('Sending artwork', data);
+        $.ajax({
+          type: 'POST',
+          url: '/api/artworks/',
+          data: data,
+          success: function(data){
+            console.log('Receiving', data);
+            $('#artwork_'+a._source.id).prop('checked', false);
+            artworksSuccessful.push(a);
+            Vue.delete(app.artworksSelected, i);
+          },
+          async: false,
         });
       }
-      this.artworksSelected = {};
+      var text = '';
+      console.log('artworksSuccessful', artworksSuccessful);
+      if(artworksSuccessful.length){
+        text += 'The following artworks have been successfully added:\n';
+        for(var a of artworksSuccessful){
+          text += '- '+app.getTitle(a, 'fr')+'\n'
+        }
+      }
+      alert(text);
     },
     getTitle: function(artwork, lang){
       if(artwork._source && artwork._source.title && artwork._source.title[lang]){
