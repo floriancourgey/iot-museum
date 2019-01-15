@@ -2,4 +2,3 @@ requests
 Django
 djangorestframework
 pyyaml
-future
