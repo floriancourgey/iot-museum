@@ -66,6 +66,7 @@ var app = new Vue({
       {value:'19e siècle', text:'19e (175k)'},
       {value:'20e siècle', text:'20e (125k)'},
     ],
+    commonAuthors: [],
   },
   methods:{
     searchArtwork: function(){
@@ -178,10 +179,19 @@ var app = new Vue({
       $.getJSON(urlArtworksAuthorsCount, function(data){
         app.authorsCount = data.count;});
     },
+    refreshCommonAuthors: function(){
+      $.getJSON(urlCommonAuthors, function(data){app.commonAuthors = _.shuffle(data).slice(0, 20);});
+    },
+    selectCommonAuthor: function(author){
+      var k = author.key;
+      $selectAuthor.empty().append('<option value="'+k+'">'+k+'</option>').val(k).trigger('change');
+      this.searchArtwork();
+    },
   }
 });
 var $selectAuthor = null;
 $(function(){
+  // select2 author
   $selectAuthor = $('#selectAuthor');
   $selectAuthor.on("change", function (e) {
     console.log(this);
@@ -205,3 +215,4 @@ $(function(){
 });
 app.searchArtwork();
 app.refreshCounts();
+app.refreshCommonAuthors();

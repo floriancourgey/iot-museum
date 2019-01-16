@@ -76,9 +76,13 @@
       The database contains <b>{[{artworksCount}]}</b> artworks and {[{authorsCount}]} authors.
     </div>
     <div class="my-2">
-      <button type="button" class="btn btn-outline-primary">
-        Profile <span class="badge badge-light">9</span>
+      Suggested authors:<br/>
+      <button v-for="author in commonAuthors" v-on:click="selectCommonAuthor(author)"
+        type="button" class="btn btn-outline-primary badge badge-pill mx-1">
+        {[{author.key}]} <span class="badge badge-secondary">{[{author.doc_count}]}</span>
       </button>
+      <br/>
+      <a href="#" v-on:click="refreshCommonAuthors">Get a new list</a>
     </div>
   </form>
   <div class="col-md-8">
@@ -139,7 +143,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@zeitiger/elevatezoom@2.5.4/jquery.elevatezoom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.6-rc.1/dist/js/select2.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
 <script type="text/javascript">
   var RMNGP_API_KEY = '{{RMNGP_API_KEY}}';
   if(!RMNGP_API_KEY || RMNGP_API_KEY.length < 1){
@@ -147,6 +151,7 @@
   }
   var urlArtworksCount = '{% url 'artwork-count' %}';
   var urlArtworksAuthorsCount = '{% url 'artwork-authors-count' %}';
+  var urlCommonAuthors = '{% static 'admin/rmngp-authors-top500.json' %}';
 </script>
 <script src="{% static 'admin/rmngp.js' %}" charset="utf-8"></script>
 {% endblock %}
