@@ -75,6 +75,11 @@
     <div class="my-4">
       The database contains <b>{[{artworksCount}]}</b> artworks and {[{authorsCount}]} authors.
     </div>
+    <div class="my-2">
+      <button type="button" class="btn btn-outline-primary">
+        Profile <span class="badge badge-light">9</span>
+      </button>
+    </div>
   </form>
   <div class="col-md-8">
     <table id="artworks-results" class="table table-sm">
@@ -143,5 +148,5 @@
   var urlArtworksCount = '{% url 'artwork-count' %}';
   var urlArtworksAuthorsCount = '{% url 'artwork-authors-count' %}';
 </script>
-<script src="{% static 'admin/index.js' %}" charset="utf-8"></script>
+<script src="{% static 'admin/rmngp.js' %}" charset="utf-8"></script>
 {% endblock %}
