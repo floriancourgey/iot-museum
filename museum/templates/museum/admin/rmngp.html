@@ -3,7 +3,6 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.6-rc.1/dist/css/select2.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <style media="screen">
   [type=checkbox] {cursor: pointer;}
@@ -27,7 +26,11 @@
         </tr>
         <tr>
           <td>Author</td>
-          <td><select style="width:100%" id="selectAuthor"></select></td>
+          <td>
+            <v-select v-model="paramsArtwork['facets[authors]']"
+              :filterable="false" :options="autocompleteAuthors" @search="onAuthorSearch">
+            </v-select>
+          </td>
         </tr>
         <tr>
           <td>Period</td>
@@ -102,7 +105,7 @@
           <td class="text-center">
             <label v-bind:for="'artwork_'+a._source.id" class="btn btn-outline-primary">
               <input type="checkbox" v-on:click="switchSelectedArtwork(a)"
-                v-bind:id="'artwork_'+a._source.id"/>
+                v-bind:id="'artwork_'+a._source.id" v-bind:checked="a._id in artworksSelected"/>
             </label>
           </td>
           <td class="text-center">
@@ -139,19 +142,18 @@
     </div>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@zeitiger/elevatezoom@2.5.4/jquery.elevatezoom.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.6-rc.1/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-select@2.5.1/dist/vue-select.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
 <script type="text/javascript">
-  var RMNGP_API_KEY = '{{RMNGP_API_KEY}}';
-  if(!RMNGP_API_KEY || RMNGP_API_KEY.length < 1){
-    alert('A Rmn-GP API key is required to use this functionnality.');
-  }
-  var urlArtworksCount = '{% url 'artwork-count' %}';
-  var urlArtworksAuthorsCount = '{% url 'artwork-authors-count' %}';
-  var urlCommonAuthors = '{% static 'admin/rmngp-authors-top500.json' %}';
+  const RMNGP_API_KEY = '{{RMNGP_API_KEY}}';
+  const urlArtworksCount = '{% url 'artwork-count' %}';
+  const urlArtworksAuthorsCount = '{% url 'artwork-authors-count' %}';
+  const urlCommonAuthors = '{% static 'admin/rmngp-authors-top500.json' %}';
+  const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+  const axiosLocal = axios.create({headers: {'X-CSRFToken': csrfToken}});
+  const axiosRmngp = axios.create({headers: {'ApiKey': RMNGP_API_KEY}});
 </script>
 <script src="{% static 'admin/rmngp.js' %}" charset="utf-8"></script>
 {% endblock %}
