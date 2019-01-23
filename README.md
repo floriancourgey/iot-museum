@@ -2,7 +2,7 @@
 
 ![](/museum/static/iot-museumx64.png) IoT Museum by [floriancourgey.com](https://floriancourgey.com?ref=iot-museum)
  &nbsp;[![Build Status](https://travis-ci.com/floriancourgey/iot-museum.svg?branch=master)](https://travis-ci.com/floriancourgey/iot-museum)
- 
+
 # IoT Museum
 Display random artworks on any screen. Meant to be used with a Raspberry Pi linked to a monitor for an in-house museum.
 
@@ -35,11 +35,16 @@ $ python3 manage.py runserver
 
 - Open up a browser and go to `http://localhost:8000`
 
-## Django management commands
+## Building
+Django management commands
 ```bash
 $ manage.py makemigrations # creates .py files
 $ manage.py migrate # execute migrations to db
 $ manage.py crawler_rmngp # starts crawler
+```
+```bash
+./node_modules/.bin/vue-cli-service build --watch --mode production
+npm run serve
 ```
 
 ## Config
