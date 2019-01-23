@@ -37,8 +37,9 @@ function next(){
     artworkHistory.push(artwork);
   });
   clearTimeout(timeoutId);
+  // timeoutInterval = parseInt($timeoutInterval.val());
   timeoutInterval = parseInt($timeoutInterval.val());
-  if(timeoutInterval <= 0){
+  if(!timeoutInterval || timeoutInterval <= 0){
     timeoutInterval = 10;
   }
   console.log('next() using timeoutInterval='+timeoutInterval);

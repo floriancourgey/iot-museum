@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <title>Musée salon</title>
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+    <link rel="shortcut icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="{% static 'w3css-4/w3pro.min.css' %}">
     <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
     <style media="screen">
@@ -22,6 +22,7 @@
     </style>
   </head>
   <body class="container-fluid">
+    <div id="app"></div>
     <main class="row text-center text-light">
       <div class="col">
         <div class="row">
