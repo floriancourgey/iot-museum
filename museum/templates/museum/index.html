@@ -11,8 +11,8 @@
     body {
       background: black;
     }
+    .img-height{ height:100vh; }
     #img {
-      height:100vh;
       background-size:contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -22,36 +22,38 @@
     </style>
   </head>
   <body class="container-fluid">
-    <main class="row text-center text-light">
+    <main class="row text-center text-light" id="app">
       <div class="col">
         <div class="row">
           <div class="col-lg-2">
 
           </div>
-          <div class="col-lg-8">
-            <div id="img"></div>
+          <div class="col-lg-8 img-height">
+            <div class="img-height" id="img" v-if="artwork && artwork.url" :style="{'background-image':'url('+artwork.url+')'}"></div>
           </div>
           <div class="col-lg-2 w3-display-container">
             <div class="w3-display-middle" style="width:100%">
-              <h1><span id="name"></span>&nbsp;</h1>
-              <h2><span id="author"></span>&nbsp;</h2>
+              {% verbatim %}
+              <h1>{{artwork.name}}&nbsp;</h1>
+              <h2>{{artwork.author}}</span>&nbsp;</h2>
+              {% endverbatim %}
             </div>
           </div>
         </div>
         <div class="row m-4">
           <div class="col">
             <div>
-              <button onclick="previous()" class="btn btn-light btn-sm"><<</button>
-              <button onclick="pause()" id="pause" class="btn btn-light btn-sm">pause</button>
-              <button onclick="play()" id="play" class="btn btn-light btn-sm">play</button>
-              <button onclick="next()" class="btn btn-light btn-sm">>></button>
+              <button @click="previous" class="btn btn-light btn-sm"><<</button>
+              <button @click="pause" v-show="!isPaused" class="btn btn-light btn-sm">pause</button>
+              <button @click="play" v-show="isPaused" class="btn btn-light btn-sm">play</button>
+              <button @click="next" class="btn btn-light btn-sm">>></button>
             </div>
             <div class="my-2">
-              <a id="adminLink" target="_blank">Edit in admin</a>
+              <a :href="urlAdminArtwork.replace(999, artwork.id)" target="_blank">Edit in admin</a>
             </div>
             <div class="my-2">
               Change every
-              <input type="number" class="p-0 px-1 d-inline-block form-control form-control-sm" value="10" style="width:55px" id="timeoutInterval">
+              <input type="number" class="p-0 px-1 d-inline-block form-control form-control-sm" style="width:55px" v-model.number="timeoutInterval">
               seconds
             </div>
             <div>
@@ -76,10 +78,11 @@
       </div>
     </footer>
 
-    <script src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}" charset="utf-8"></script> <!-- 3.3.1 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.min.js"></script>
     <script type="text/javascript">
       var urlNext = '{% url 'next' %}';
-      var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 1 %}';
+      var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 999 %}';
     </script>
     <script src="{% static 'index.js' %}" charset="utf-8"></script>
   </body>

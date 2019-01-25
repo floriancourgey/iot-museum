@@ -1,66 +1,52 @@
-// if of the tiemout process (to be stopped when Pause)
-var timeoutId = null;
-// array of displayed artwork
-var artworkHistory = [];
-// jquery objects
-var $img = null;
-var $name = null;
-var $author = null;
-var $timeoutInterval = null;
-var $pause = null;
-var $play = null;
-var $adminLink = null;
-// functions
-function previous(){
-  pause();
-  if(artworkHistory.length < 1){
-    return;
+var app = new Vue({
+  el: '#app',
+  data: {
+    isPaused: false,
+    artwork: {},
+    timeoutId: null, // if of the tiemout process (to be stopped when Pause)
+    artworkHistory: [], // array of displayed artwork
+    timeoutInterval: 10,
+  },
+  methods:{
+    previous: function(){
+      this.pause();
+      if(this.artworkHistory.length < 1){
+        return;
+      }
+      this.artwork = this.artworkHistory.pop();
+    },
+    pause: function(){
+      this.isPaused = true;
+      clearTimeout(self.timeoutId);
+    },
+    play: function(){
+      this.isPaused = false;
+      this.next();
+    },
+    next: function(){
+      console.log('next() called');
+      axios.get(urlNext)
+        .then(function (response) {
+          app.artwork = response.data;
+          app.artworkHistory.push(app.artwork);
+        });
+      clearTimeout(this.timeoutId);
+      if(this.isPaused){
+        return;
+      }
+      if(this.timeoutInterval <= 0){
+        this.timeoutInterval = 10;
+      }
+      this.timeoutId = setTimeout(function(){
+        console.log('setTimeout() called');
+        app.next();
+      }, this.timeoutInterval*1000);
+      console.log('next() timeoutId='+this.timeoutId);
+    },
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      app.next();
+    })
   }
-  artwork = artworkHistory.pop();
-  setArtwork(artwork);
-}
-function pause(){
-  $pause.hide();
-  $play.show();
-  clearTimeout(timeoutId);
-}
-function play(){
-  $play.hide();
-  $pause.show();
-  next();
-}
-function next(){
-  console.log('next() called');
-  $.get(urlNext, null, function(artwork){
-    console.log(artwork);
-    setArtwork(artwork);
-    artworkHistory.push(artwork);
-  });
-  clearTimeout(timeoutId);
-  timeoutInterval = parseInt($timeoutInterval.val());
-  if(timeoutInterval <= 0){
-    timeoutInterval = 10;
-  }
-  console.log('next() using timeoutInterval='+timeoutInterval);
-  timeoutId = setTimeout(function(){
-    console.log('setTimeout() called');
-    next();
-  }, timeoutInterval*1000);
-  console.log('next() timeoutId='+timeoutId);
-}
-function setArtwork(a) {
-  $img.css('background-image', 'url('+a.url+')');
-  $name.html(a.name);
-  $author.html(a.author);
-  $adminLink.attr('href', urlAdminArtwork.replace('1', a.id));
-}
-$(function(){
-  $img = $('#img');
-  $name = $('#name');
-  $author = $('#author');
-  $timeoutInterval = $('#timeoutInterval');
-  $pause = $('#pause');
-  $play = $('#play');
-  $adminLink = $('#adminLink');
-  play();
-});
+})
