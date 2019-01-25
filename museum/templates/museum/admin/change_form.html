@@ -5,12 +5,11 @@
   <div id="img" class="col-4" style="background-repeat:no-repeat;background-size:contain;">
     <script type="text/javascript">
       function update($){
-        $('#img').css('background-image', 'url('+$('#id_url').val()+')');
+        var url = $('#id_url_online').val().length > 0 ? $('#id_url_online').val() : $('.field-url_local a').attr('href');
+        $('#img').css('background-image', 'url('+url+')');
       }
       django.jQuery(function($){
-        $('#id_url').change(function(){
-          update($);
-        });
+        $('#id_url_online').change(function(){ update($); });
         update($);
       });
     </script>

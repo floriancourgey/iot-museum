@@ -4,7 +4,8 @@ from datetime import datetime
 class Artwork(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     edited_datetime = models.DateTimeField(auto_now=True)
-    url = models.URLField(max_length=255)
+    url_online = models.URLField(max_length=255, default='', blank=True)
+    url_local = models.ImageField(upload_to='artworks', default='', blank=True)
     name = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     timesPlayed = models.IntegerField(default=0) # number of times this artwork has been played

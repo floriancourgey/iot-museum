@@ -1,6 +1,8 @@
 __pycache__
 dist
 config.yml
+!uploads/.gitkeep
+uploads/
 
 ### macOS ###
 # General
