@@ -1,20 +1,23 @@
 <template>
   <div>
-    <img alt="Vue logo" src="./assets/logo.png">
-    Welcome to Your Vue.js App
+    <Main/>
+    <Footer/>
   </div>
+
 </template>
 
 <script>
+import Main from './components/Main.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'app',
   data: function() {
     return {
-      artwork: null,
-      artworksHistory: [],
+      
     }
   },
+  components: {Main,Footer},
   methods: {
 
   },

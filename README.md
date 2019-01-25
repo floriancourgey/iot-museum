@@ -43,8 +43,9 @@ $ manage.py migrate # execute migrations to db
 $ manage.py crawler_rmngp # starts crawler
 ```
 ```bash
-./node_modules/.bin/vue-cli-service build --watch --mode production
-npm run serve
+$ cd vue
+$ npm run serve # develop app
+$ npx vue-cli-service build --mode production # deploy
 ```
 
 ## Config

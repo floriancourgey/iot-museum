@@ -1,12 +1,11 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>Musée salon</title>
-    <link rel="shortcut icon" href="<%= BASE_URL %>favicon.ico">
-    <link rel="stylesheet" href="{% static 'w3css-4/w3pro.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="./w3css-4/w3pro.min.css">
+    <link rel="stylesheet" href="./bootstrap-4.0.0/css/bootstrap.min.css">
     <style media="screen">
     body {
       background: black;
@@ -23,65 +22,11 @@
   </head>
   <body class="container-fluid">
     <div id="app"></div>
-    <main class="row text-center text-light">
-      <div class="col">
-        <div class="row">
-          <div class="col-lg-2">
 
-          </div>
-          <div class="col-lg-8">
-            <div id="img"></div>
-          </div>
-          <div class="col-lg-2 w3-display-container">
-            <div class="w3-display-middle" style="width:100%">
-              <h1><span id="name"></span>&nbsp;</h1>
-              <h2><span id="author"></span>&nbsp;</h2>
-            </div>
-          </div>
-        </div>
-        <div class="row m-4">
-          <div class="col">
-            <div>
-              <button onclick="previous()" class="btn btn-light btn-sm">&lt;&lt;</button>
-              <button onclick="pause()" id="pause" class="btn btn-light btn-sm">pause</button>
-              <button onclick="play()" id="play" class="btn btn-light btn-sm">play</button>
-              <button onclick="next()" class="btn btn-light btn-sm">&gt;&gt;</button>
-            </div>
-            <div class="my-2">
-              <a id="adminLink" target="_blank">Edit in admin</a>
-            </div>
-            <div class="my-2">
-              Change every
-              <input type="number" class="p-0 px-1 d-inline-block form-control form-control-sm" value="10" style="width:55px" id="timeoutInterval">
-              seconds
-            </div>
-            <div>
-              Fetching among a total of {{numberOfArtworks}} artworks.
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-    <footer class="row bg-dark text-center text-light p-4">
-      <div class="col">
-        <div class="mb-2">
-          <img src="{% static 'iot-museumx64.png' %}"/>
-          Iot Museum developed by <a href="https://floriancourgey.com?ref=iot-museum" target="_blank">floriancourgey.com</a>
-        </div>
-        <div class="">
-          Visit <a href="{% url 'admin:index' %}">admin</a> to add and edit artworks.
-        </div>
-        <div class="m-1">
-          <a href="{% url 'reset' %}">Reset<a/> times played to 0
-        </div>
-      </div>
-    </footer>
-
-    <script src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}" charset="utf-8"></script> <!-- 3.3.1 -->
+    <script src="axios-0.18.0.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-      var urlNext = '{% url 'next' %}';
-      var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 1 %}';
+      var urlNext = 'url next';
+      var urlAdminArtwork = 'admin:museum_artwork_change';
     </script>
-    <script src="{% static 'index.js' %}" charset="utf-8"></script>
   </body>
 </html>
