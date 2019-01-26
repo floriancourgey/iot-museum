@@ -7,19 +7,7 @@
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'w3css-4/w3pro.min.css' %}">
     <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
-    <style media="screen">
-    body {
-      background: black;
-    }
-    .img-height{ height:100vh; }
-    #img {
-      background-size:contain;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    h1 { font-size: 1rem; }
-    h2 { font-size: .8rem; }
-    </style>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
   </head>
   <body class="container-fluid">
     <main class="row text-center text-light" id="app">
@@ -32,7 +20,7 @@
             <div class="img-height" id="img" v-if="artwork && artwork.url_online" :style="{'background-image':'url('+getArtworkUrl()+')'}"></div>
           </div>
           <div class="col-lg-2 w3-display-container">
-            <div class="w3-display-middle" style="width:100%">
+            <div class="w3-display-middle full-width">
               {% verbatim %}
               <h1>{{artwork.name}}&nbsp;</h1>
               <h2>{{artwork.author}}</span>&nbsp;</h2>
@@ -53,7 +41,8 @@
             </div>
             <div class="my-2">
               Change every
-              <input type="number" class="p-0 px-1 d-inline-block form-control form-control-sm" style="width:55px" v-model.number="timeoutInterval">
+              <input type="number" class="p-0 px-1 d-inline-block form-control form-control-sm"
+                v-model.number="timeoutInterval" min="1" id="timeoutInterval">
               seconds
             </div>
             <div>
