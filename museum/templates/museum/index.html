@@ -17,7 +17,7 @@
 
           </div>
           <div class="col-lg-8 img-height">
-            <div class="img-height" id="img" v-if="artwork && artwork.url_online" :style="{'background-image':'url('+getArtworkUrl()+')'}"></div>
+            <div class="img-height" id="img" v-if="artwork && getArtworkUrl()" :style="{'background-image':'url('+getArtworkUrl()+')'}"></div>
           </div>
           <div class="col-lg-2 w3-display-container">
             <div class="w3-display-middle full-width">
@@ -61,9 +61,6 @@
         <div class="">
           Visit <a href="{% url 'admin:index' %}">admin</a> to add and edit artworks.
         </div>
-        <div class="m-1">
-          <a href="{% url 'reset' %}">Reset<a/> times played to 0
-        </div>
       </div>
     </footer>
 
@@ -73,6 +70,7 @@
     <script type="text/javascript">
       var urlNext = '{% url 'next' %}';
       var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 999 %}';
+      var MEDIA_URL = '{{ MEDIA_URL }}';
     </script>
     <script src="{% static 'index.js' %}" charset="utf-8"></script>
   </body>

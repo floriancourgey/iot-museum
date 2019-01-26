@@ -44,13 +44,16 @@ var app = new Vue({
       console.log('next() timeoutId='+this.timeoutId);
     },
     getArtworkUrl: function(){
-      if(!this.artwork || !this.artwork.url_online){
+      if(!this.artwork){
         return null;
       }
-      if(this.artwork.url_online.length>0){
+      if(this.artwork.url_online && this.artwork.url_online.length>0){
         return this.artwork.url_online;
       }
-      return this.artwork.url_local;
+      if(this.artwork.url_local && this.artwork.url_local.length>0){
+        return MEDIA_URL+this.artwork.url_local;
+      }
+      return null;
     },
   },
   mounted: function () {
