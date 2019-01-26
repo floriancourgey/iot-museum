@@ -15,6 +15,7 @@ class Artwork(models.Model):
 
     def as_dict(self):
         d = self.__dict__
+        d['url_local'] = self.url_local.name
         del d['_state']
         return d
 

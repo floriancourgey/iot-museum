@@ -43,6 +43,15 @@ var app = new Vue({
       }, this.timeoutInterval*1000);
       console.log('next() timeoutId='+this.timeoutId);
     },
+    getArtworkUrl: function(){
+      if(!this.artwork || !this.artwork.url_online){
+        return null;
+      }
+      if(this.artwork.url_online.length>0){
+        return this.artwork.url_online;
+      }
+      return this.artwork.url_local;
+    },
   },
   mounted: function () {
     this.$nextTick(function () {
