@@ -4,12 +4,29 @@
 <div class="row mb-2">
   <div id="img" class="col-4" style="background-repeat:no-repeat;background-size:contain;">
     <script type="text/javascript">
+      var fr = new FileReader();
+      fr.onload = function(){
+        django.jQuery('#img').css('background-image', 'url("' + fr.result + '")');
+      }
       function update($){
-        var url = $('#id_url_online').val().length > 0 ? $('#id_url_online').val() : $('.field-url_local a').attr('href');
-        $('#img').css('background-image', 'url('+url+')');
+        console.log('update');
+        var url = $('#id_url_online').val();
+        if(url.length > 0){
+          console.log('1');
+          $('#img').css('background-image', 'url('+url+')');
+          return;
+        }
+        console.log('1');
+        var files = document.getElementById('id_url_local').files;
+        console.log('2', files);
+        if(files.length > 0){
+          console.log('3');
+          fr.readAsDataURL(files[0]);
+        }
       }
       django.jQuery(function($){
         $('#id_url_online').change(function(){ update($); });
+        $('#id_url_local').change(function(){ update($); });
         update($);
       });
     </script>
