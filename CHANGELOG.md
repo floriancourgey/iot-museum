@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - admin CSS in its own file
 - Artwork.author is now optional (default='' and blank=True)
+- Frontend deps are local (Front has to be usable even offline - the Raspberry shouldn't need internet access)
 
 ## [1.2.1] - 2019-01-29
 ### Fixed
