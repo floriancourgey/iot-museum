@@ -54,6 +54,7 @@ class Command(BaseCommand):
                 a.author = json['authors'][0]['name']['fr']
             with suppress (KeyError, IndexError):
                 a.date_display = json['date']['display']
+                a.date_display = a.date_display.replace('T00:00:00+00:00', '') # RmnGP sometimes adds timestamp
             with suppress (KeyError, IndexError):
                 a.origin_id = json['id']
             # append it to master
