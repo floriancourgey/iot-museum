@@ -4,16 +4,21 @@ from museum.models import Artwork
 from contextlib import suppress
 from crawler_rmngp.management.commands.functions import getRmngpObject
 
-MAX_PER_PAGE = 15
-
 class Command(BaseCommand):
     help = 'Usage: python manage.py rmngp_works --author "Vincent Van Gogh"'
 
     def add_arguments(self, parser):
         parser.add_argument('--author')
+        parser.add_argument('--per_page', type=int, default=15,
+            help='integer for the "per_page" api parameter')
+        parser.add_argument('--page', type=int, default=1,
+            help='integer for the "page" api parameter')
 
     def handle(self, *args, **options):
-        url = 'works?per_page='+str(MAX_PER_PAGE)+'&'
+        url = 'works?'
+        url += 'per_page='+str(options['per_page'])+'&'
+        url += 'page='+str(options['page'])+'&'
+
         if options['author']:
             url += 'facets[authors]='+options['author']
 
@@ -23,26 +28,36 @@ class Command(BaseCommand):
             return
 
         # convert json to Artwork objects
+        print('Got API result, parsing...')
         artworks = []
         for artwork in result['hits']['hits']:
             if artwork['_score'] < 1:
                 continue
-            o = Artwork(origin='rmngp')
-            a = artwork['_source']
+            a = Artwork(origin='rmngp')
+            json = artwork['_source']
+            # mandatory fields
             with suppress (KeyError, IndexError):
-                o.name = a['title']['fr']
+                a.name = json['title']['fr']
             with suppress (KeyError, IndexError):
-                o.author = a['authors'][0]['name']['fr']
-            with suppress (KeyError, IndexError):
-                o.url = a['images'][0]['urls']['original']
-            if not o.name or not o.url:
+                a.url_online = json['images'][0]['urls']['original']
+            if not a.name or not a.url_online:
                 continue
-            # look for an artwork with same url or same name
+            # check existing: artwork with same url or same name
             existing = Artwork.objects.filter(
-                Q(url=o.url) | Q(name=o.name)
-            )
-            if not existing:
-                artworks.append(o)
+                Q(url_online=a.url_online) | Q(name=a.name)
+            ).first()
+            # if existing, we update it
+            if existing:
+                a = existing
+            # other fields
+            with suppress (KeyError, IndexError):
+                a.author = json['authors'][0]['name']['fr']
+            with suppress (KeyError, IndexError):
+                a.date_display = json['date']['display']
+            with suppress (KeyError, IndexError):
+                a.origin_id = json['id']
+            # append it to master
+            artworks.append(a)
 
         if len(artworks) < 1:
             print('No artwork to add')
@@ -51,11 +66,16 @@ class Command(BaseCommand):
         # recap
         print('Adding '+str(len(artworks))+' artworks:')
         for a in artworks:
-            print('- '+str(a))
+            text = '- '+str(a)
+            if a.id and a.id > 0:
+                text += ' -> UPDATE'
+            print(text)
 
         # ask to add to db
-        s = input('Add to database [y/n]? ')
-        if s == 'y':
-            for a in artworks:
-                a.save()
-        print(str(len(artworks))+' artworks have been successfully added to the database.')
+        s = input('Add to database [y/N]? ')
+        if s != 'y':
+            exit()
+
+        for a in artworks:
+            a.save()
+        print(str(len(artworks))+' artworks have successfully been added to the database.')
