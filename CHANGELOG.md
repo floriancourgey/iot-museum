@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
--
+- Admin Artwork fieldesets (now displays created_datetime and edited_datetime)
 ### Changed
--
+- admin CSS in its own file
+- Artwork.author is now optional (default='' and blank=True)
 
 ## [1.2.1] - 2019-01-29
 ### Fixed
