@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Admin Artwork fieldesets (now displays created_datetime and edited_datetime)
+- Freeze requirements version
+- Heroku demo (with whitenoise, gunicorn, Procfile, env vars, runtime.txt...)
 ### Changed
 - admin CSS in its own file
 - Artwork.author is now optional (default='' and blank=True)
