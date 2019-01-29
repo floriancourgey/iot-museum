@@ -7,7 +7,7 @@ class Artwork(models.Model):
     url_online = models.URLField(max_length=255, default='', blank=True)
     url_local = models.ImageField(upload_to='artworks', default='', blank=True)
     name = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
+    author = models.CharField(max_length=255, default='', blank=True)
     date_display = models.CharField(max_length=255, default='', blank=True) # text date (15th century, renaissance, 1789..)
     timesPlayed = models.IntegerField(default=0) # number of times this artwork has been played
     origin = models.CharField(max_length=255) # origin system (crawler site, backoffice..)
