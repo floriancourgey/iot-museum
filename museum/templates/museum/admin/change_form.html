@@ -35,4 +35,20 @@
     {{block.super}}
   </div>
 </div>
+{% if not add %}
+  <div class="row text-center mb-4">
+    <div class="col-12">
+      <a id="author" href="{% url 'admin:museum_artwork_changelist' %}rmngp/?author=" target="_blank">
+        Add artworks from this author from the RmnGP database
+      </a>
+      <script type="text/javascript">
+        django.jQuery(function($){
+          var href = $('#author').attr('href');
+          href += $('#id_author').val();
+          $('#author').attr('href', href);
+        });
+      </script>
+    </div>
+  </div>
+{% endif %}
 {% endblock %}

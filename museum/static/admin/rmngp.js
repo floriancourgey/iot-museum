@@ -190,6 +190,9 @@ var app;
     },
     mounted: function(){
       this.$nextTick(function () {
+        if(urlParams.get('author')){
+          app.paramsArtwork['facets[authors]'] = urlParams.get('author');
+        }
         this.searchArtwork();
         this.refreshCounts();
         this.refreshCommonAuthors();

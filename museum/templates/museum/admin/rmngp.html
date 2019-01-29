@@ -154,6 +154,7 @@
   const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
   const axiosLocal = axios.create({headers: {'X-CSRFToken': csrfToken}});
   const axiosRmngp = axios.create({headers: {'ApiKey': RMNGP_API_KEY}});
+  const urlParams = new URLSearchParams(window.location.search);
 </script>
 <script src="{% static 'admin/rmngp.js' %}" charset="utf-8"></script>
 {% endblock %}
