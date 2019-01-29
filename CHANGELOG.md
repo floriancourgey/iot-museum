@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 -
 
+## [1.2.1] - 2019-01-29
+### Fixed
+- Added Pillow as a pip dependency, required by Django ImageField
+
 ## [1.2.0] - 2019-01-28
 ### Added
 - Artwork date: "display_date" is a string not an actual timestamp. So it can be "Sept 1789", "Between -500 and -490", etc
