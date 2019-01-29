@@ -25,12 +25,12 @@ var app = new Vue({
     },
     next: function(){
       console.log('next() called');
+      app.artworkHistory.push(app.artwork);
+      clearTimeout(this.timeoutId);
       axios.get(urlNext)
         .then(function (response) {
           app.artwork = response.data;
-          app.artworkHistory.push(app.artwork);
         });
-      clearTimeout(this.timeoutId);
       if(this.isPaused){
         return;
       }
