@@ -7,7 +7,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default secret key used for de
 
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False' # True if no env(DJANGO_DEBUG)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'iot-museum.herokuapp.com',
+]
 
 INSTALLED_APPS = [
     'museum',
