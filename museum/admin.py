@@ -6,11 +6,25 @@ from config import config
 
 @admin.register(Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
+    readonly_fields = ('created_datetime', 'edited_datetime')
     list_display = ('name', 'author', 'active', 'date_display', 'timesPlayed', 'created_datetime', 'edited_datetime')
     list_editable = ('active',)
     list_filter = ('active','timesPlayed')
     list_per_page = 20
     search_fields = ('name', 'author', 'url_online', 'url_local')
+
+    fieldsets = (
+        ('Mandatory settings', {
+            'fields': ('name', 'url_online', 'url_local')
+        }),
+        ('Optional settings', {
+            'fields': ('author', 'date_display')
+        }),
+        ('Advanced', {
+            'classes': ('collapse',),
+            'fields': ('timesPlayed', 'created_datetime', 'edited_datetime'),
+        }),
+    )
 
     change_form_template = 'museum/admin/change_form.html'
 
