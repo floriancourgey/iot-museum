@@ -23,7 +23,10 @@
             <div class="w3-display-middle full-width">
               {% verbatim %}
               <h1>{{artwork.name}}&nbsp;</h1>
-              <h2>{{artwork.author}}</span>&nbsp;</h2>
+              <h2 class="text-capitalize">{{artwork.author}}&nbsp;</h2>
+              <p class="text-capitalize text-secondary">
+                <small>{{artwork.date_display}}</small>
+              </p>
               {% endverbatim %}
             </div>
           </div>
