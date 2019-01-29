@@ -2,11 +2,11 @@
 
 ![](/museum/static/iot-museumx64.png) IoT Museum by [floriancourgey.com](https://floriancourgey.com?ref=iot-museum)
  &nbsp;[![Build Status](https://travis-ci.com/floriancourgey/iot-museum.svg?branch=master)](https://travis-ci.com/floriancourgey/iot-museum)
- 
+
 # IoT Museum
 Display random artworks on any screen. Meant to be used with a Raspberry Pi linked to a monitor for an in-house museum.
 
-*Demo available at https://floriancourgey.github.io/iot-museum.*
+*Demo available at https://iot-museum.herokuapp.com.*
 
 ## General instructions
 - Make sure to have python 3 installed. You can get it from https://www.python.org/downloads/. Check the installation with `python --version` in a terminal:
