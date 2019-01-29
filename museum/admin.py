@@ -10,7 +10,7 @@ class ArtworkAdmin(admin.ModelAdmin):
     list_editable = ('active',)
     list_filter = ('active','timesPlayed')
     list_per_page = 20
-    search_fields = ('name', 'author', 'url')
+    search_fields = ('name', 'author', 'url_online', 'url_local')
 
     change_form_template = 'museum/admin/change_form.html'
 

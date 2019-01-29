@@ -8,6 +8,7 @@ class Artwork(models.Model):
     url_local = models.ImageField(upload_to='artworks', default='', blank=True)
     name = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
+    date_display = models.CharField(max_length=255, default='', blank=True) # text date (15th century, renaissance, 1789..)
     timesPlayed = models.IntegerField(default=0) # number of times this artwork has been played
     origin = models.CharField(max_length=255) # origin system (crawler site, backoffice..)
     origin_id = models.CharField(max_length=255, default='', blank=True) # id in the origin system
@@ -23,8 +24,8 @@ class Artwork(models.Model):
         return '"'+self.name+'" by '+str(self.author)
 
     def existing(self):
-        '''search by url|name|origin+origin_id'''
-        a = Artwork.objects.filter(url=self.url).first()
+        '''search by url_online|name|origin+origin_id'''
+        a = Artwork.objects.filter(url_online=self.url_online).first()
         if a:
             return a
         a = Artwork.objects.filter(name=self.name).first()
