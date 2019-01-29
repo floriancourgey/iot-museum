@@ -4,11 +4,7 @@
 
 {% block extrastyle %}{{ block.super }}
 <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
-<style media="screen">
-  html>body div#header {height: initial;}
-  html>body .submit-row a.deletelink {height: initial;}
-  html>body table>caption {caption-side: top}
-</style>
+<link rel="stylesheet" href="{% static 'admin/admin.css' %}">
 {% endblock %}
 
 {% block messages %}
