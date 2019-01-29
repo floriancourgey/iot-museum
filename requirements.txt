@@ -1,5 +1,6 @@
-requests
-Django
-djangorestframework
-pyyaml
-Pillow
+Django==2.1.5
+djangorestframework==3.9.0
+gunicorn==19.9.0
+Pillow==5.4.1
+pyyaml==3.13
+requests==2.21.0
