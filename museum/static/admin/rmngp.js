@@ -108,7 +108,7 @@ var app;
 
         var firstKey = Object.keys(this.artworksSelected)[0];
         var a = this.artworksSelected[firstKey];
-        delete this.artworksSelected[firstKey];
+        Vue.delete(app.artworksSelected, firstKey);
 
         var data = {
           author:app.getAuthor(a, 'fr'),
@@ -121,7 +121,6 @@ var app;
         axiosLocal.post('/api/artworks/', data)
           .then(function(response){
             app.artworksSuccessfullyAdded.push(a);
-            Vue.delete(app.artworksSelected, firstKey);
           })
           .catch(function (error) {
             console.log(error);
