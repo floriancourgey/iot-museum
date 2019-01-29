@@ -3,9 +3,9 @@ from config import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-SECRET_KEY = config['django']['SECRET_KEY']
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default secret key used for development only')
 
-DEBUG = config['django']['DEBUG']
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False' # True if no env(DJANGO_DEBUG)
 
 ALLOWED_HOSTS = []
 
