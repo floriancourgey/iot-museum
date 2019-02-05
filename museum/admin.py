@@ -18,11 +18,11 @@ class ArtworkAdmin(admin.ModelAdmin):
             'fields': ('name', 'url_online', 'url_local')
         }),
         ('Optional settings', {
-            'fields': ('author', 'date_display')
+            'fields': ('author', 'date_display', 'active')
         }),
         ('Advanced', {
             'classes': ('collapse',),
-            'fields': ('timesPlayed', 'created_datetime', 'edited_datetime'),
+            'fields': ('timesPlayed', 'origin', 'origin_id', 'created_datetime', 'edited_datetime'),
         }),
     )
 
