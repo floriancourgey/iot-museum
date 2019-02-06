@@ -31,13 +31,18 @@ class ArtworkAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [
-            path('rmngp/', self.admin_site.admin_view(self.rmngp)),
+            path('rmngp/', self.admin_site.admin_view(self.add_from_rmngp)),
+            path('metmuseum/', self.admin_site.admin_view(self.add_from_metmuseum)),
         ]
         return my_urls + urls
 
-    def rmngp(self, request):
+    def add_from_rmngp(self, request):
         context = dict(
            self.admin_site.each_context(request),
            RMNGP_API_KEY=config['rmngp']['api_key'],
         )
-        return TemplateResponse(request, "museum/admin/rmngp.html", context)
+        return TemplateResponse(request, 'museum/admin/add_from_rmngp.html', context)
+
+    def add_from_metmuseum(self, request):
+        context = dict(self.admin_site.each_context(request),)
+        return TemplateResponse(request, 'museum/admin/add_from_metmuseum.html', context)
