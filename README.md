@@ -90,3 +90,13 @@ Django is better for:
 
 ### Add artwork from external sources (i.e. https://art.rmngp.fr/fr/)
 ![](/docs/admin-add-from-rmngp.jpg)
+
+## Create a crawler
+```console
+# create folder structure
+$ python3 manage.py startapp crawler_rijks
+# create admin page
+$ touch museum/admin/python3 manage.py startapp crawler_rijks.html
+# add view in museum/admin.py get_urls()
+# add link in templates/admin/base.html
+```
