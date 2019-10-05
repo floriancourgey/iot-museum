@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'api',
     'crawler_rmngp',
     'crawler_metmuseum',
+    'crawler_rijks',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

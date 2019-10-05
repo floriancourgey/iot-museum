@@ -33,6 +33,7 @@ class ArtworkAdmin(admin.ModelAdmin):
         my_urls = [
             path('rmngp/', self.admin_site.admin_view(self.add_from_rmngp)),
             path('metmuseum/', self.admin_site.admin_view(self.add_from_metmuseum)),
+            path('rijks/', self.admin_site.admin_view(self.add_from_rijks)),
         ]
         return my_urls + urls
 
@@ -46,3 +47,10 @@ class ArtworkAdmin(admin.ModelAdmin):
     def add_from_metmuseum(self, request):
         context = dict(self.admin_site.each_context(request),)
         return TemplateResponse(request, 'museum/admin/add_from_metmuseum.html', context)
+
+    def add_from_rijks(self, request):
+        context = dict(
+            self.admin_site.each_context(request),
+            RIJKS_API_KEY=config['rijks']['api_key'],
+        )
+        return TemplateResponse(request, 'museum/admin/add_from_rijks.html', context)
