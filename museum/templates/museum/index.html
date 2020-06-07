@@ -24,6 +24,9 @@
               {% verbatim %}
               <h1>{{artwork.name}}&nbsp;</h1>
               <h2 class="text-capitalize">{{artwork.author}}&nbsp;</h2>
+              <p v-if="artwork.author_country_alpha2">
+                <img :src="'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/'+artwork.author_country_alpha2.toLowerCase()+'.svg'" id="author_country_alpha2"/>
+              </p>
               <p class="text-capitalize text-secondary">
                 <small>{{artwork.date_display}}</small>
               </p>

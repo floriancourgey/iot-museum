@@ -23,6 +23,7 @@ class Next(View):
         artwork.save()
         # return as json
         return JsonResponse(artwork.as_dict())
+
 class Reset(View):
     def get(self, request):
         Artwork.objects.all().update(timesPlayed=0)

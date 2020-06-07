@@ -1,9 +1,12 @@
 from django.contrib import admin
 from .models import Artwork
 from .models import Origin
+from .models import Country
 from django.urls import path
 from django.template.response import TemplateResponse
 from config import config
+
+admin.site.register(Country)
 
 admin.site.register(Origin)
 
@@ -21,7 +24,7 @@ class ArtworkAdmin(admin.ModelAdmin):
             'fields': ('name', 'url_online', 'url_local')
         }),
         ('Optional settings', {
-            'fields': ('author', 'date_display', 'active')
+            'fields': ('author', 'author_country', 'date_display', 'active')
         }),
         ('Advanced', {
             'classes': ('collapse',),
