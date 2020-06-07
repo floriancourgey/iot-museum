@@ -1,6 +1,15 @@
 from django.db import models
 from datetime import datetime
 
+class Origin(models.Model):
+    created_datetime = models.DateTimeField(auto_now_add=True)
+    edited_datetime = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=255)
+    id = models.CharField(primary_key=True, max_length=255)
+
+    def __str__(self):
+        return self.name
+
 class Artwork(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     edited_datetime = models.DateTimeField(auto_now=True)
@@ -10,9 +19,9 @@ class Artwork(models.Model):
     author = models.CharField(max_length=255, default='', blank=True)
     date_display = models.CharField(max_length=255, default='', blank=True) # text date (15th century, renaissance, 1789..)
     timesPlayed = models.IntegerField(default=0) # number of times this artwork has been played
-    origin = models.CharField(max_length=255) # origin system (crawler site, backoffice..)
-    origin_id = models.CharField(max_length=255, default='', blank=True) # id in the origin system
     active = models.BooleanField(default=True)
+    origin = models.ForeignKey(Origin, on_delete=models.CASCADE)
+    origin_artwork_id = models.CharField(max_length=255, default='', blank=True) # id in the origin system
 
     def as_dict(self):
         d = self.__dict__
@@ -24,7 +33,7 @@ class Artwork(models.Model):
         return '"'+self.name+'" by '+str(self.author)
 
     def existing(self):
-        '''search by url_online|name|origin+origin_id'''
+        '''search by url_online|name|origin+origin_artwork_id'''
         a = Artwork.objects.filter(url_online=self.url_online).first()
         if a:
             return a
@@ -34,9 +43,9 @@ class Artwork(models.Model):
         print(self)
         print(self.__dict__)
         print(self.origin)
-        print(self.origin_id)
-        if self.origin and self.origin_id:
-            a = Artwork.objects.filter(origin=self.origin, origin_id=self.origin_id).first()
+        print(self.origin_artwork_id)
+        if self.origin and self.origin_artwork_id:
+            a = Artwork.objects.filter(origin=self.origin, origin_artwork_id=self.origin_artwork_id).first()
             if a:
                 return a
         return None

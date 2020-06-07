@@ -1,8 +1,11 @@
 from django.contrib import admin
 from .models import Artwork
+from .models import Origin
 from django.urls import path
 from django.template.response import TemplateResponse
 from config import config
+
+admin.site.register(Origin)
 
 @admin.register(Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
@@ -22,7 +25,7 @@ class ArtworkAdmin(admin.ModelAdmin):
         }),
         ('Advanced', {
             'classes': ('collapse',),
-            'fields': ('timesPlayed', 'origin', 'origin_id', 'created_datetime', 'edited_datetime'),
+            'fields': ('timesPlayed', 'origin', 'origin_artwork_id', 'created_datetime', 'edited_datetime'),
         }),
     )
 
