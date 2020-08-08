@@ -65,3 +65,18 @@ class Artwork(models.Model):
             if a:
                 return a
         return None
+
+class GameUser(models.Model):
+    created_datetime = models.DateTimeField(auto_now_add=True)
+    edited_datetime = models.DateTimeField(auto_now=True)
+    username = models.CharField(max_length=255)
+
+class Game(models.Model):
+    created_datetime = models.DateTimeField(auto_now_add=True)
+    edited_datetime = models.DateTimeField(auto_now=True)
+
+class GameEvent(models.Model):
+    created_datetime = models.DateTimeField(auto_now_add=True)
+    edited_datetime = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(GameUser, on_delete=models.PROTECT)
+    game = models.ForeignKey(Game, on_delete=models.PROTECT)
