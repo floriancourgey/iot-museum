@@ -5,6 +5,10 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from museum.models import Artwork
 from museum.models import GameUser
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,6 +17,14 @@ class UserSerializer(serializers.ModelSerializer):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    # def list(self, request):
+    #     queryset = User.objects.all()
+    #     serializer = UserSerializer(queryset, many=True)
+    #     # return Response(serializer.data)
+    #     users = serializer.data
+    #     for user in users:
+    #         user.a = 'a'
+    #     return Response(users)
 
 class ArtworkSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
@@ -49,9 +61,16 @@ class GameUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameUser
         fields = ('created_datetime', 'edited_datetime', 'username')
+
 class GameUserViewSet(viewsets.ModelViewSet):
     queryset = GameUser.objects.all()
     serializer_class = GameUserSerializer
+
+    @action(detail=False, url_name='login')
+    def login(self, request):
+        user = User.objects.get(username=request.GET.get('username'))
+        token, created = Token.objects.get_or_create(user_id=user.id)
+        return JsonResponse({'token': token.key})
 # class ArtworkViewSet(viewsets.ModelViewSet):
 # router.register('gameUsers', views.GameUserViewSet)
 # router.register('games', views.GameViewSet)
