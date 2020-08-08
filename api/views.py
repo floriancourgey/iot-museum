@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from museum.models import Artwork
+from museum.models import GameUser
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -43,3 +44,15 @@ class ArtworkViewSet(viewsets.ModelViewSet):
     def count_distinct_authors(self, request):
         count = Artwork.objects.order_by('author').values('author').distinct().count()
         return JsonResponse({'count': count})
+
+class GameUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GameUser
+        fields = ('created_datetime', 'edited_datetime', 'username')
+class GameUserViewSet(viewsets.ModelViewSet):
+    queryset = GameUser.objects.all()
+    serializer_class = GameUserSerializer
+# class ArtworkViewSet(viewsets.ModelViewSet):
+# router.register('gameUsers', views.GameUserViewSet)
+# router.register('games', views.GameViewSet)
+# router.register('gameEvents', views.GameEventViewSet)
