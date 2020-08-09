@@ -3,13 +3,11 @@ from .models import Artwork
 from .models import Origin
 from .models import Country
 from .models import Game
-from .models import GameUser
 from .models import GameEvent
 from django.urls import path
 from django.template.response import TemplateResponse
 from config import config
 
-admin.site.register(GameUser)
 admin.site.register(Game)
 admin.site.register(GameEvent)
 

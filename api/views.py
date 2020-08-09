@@ -3,17 +3,17 @@ from rest_framework.decorators import action
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from museum.models import Artwork
-from museum.models import GameUser
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
+from museum.models import Artwork
+from museum.models import Game
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'is_staff')
+        fields = ('id', 'url', 'username', 'email', 'is_staff')
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -25,6 +25,11 @@ class UserViewSet(viewsets.ModelViewSet):
     #     for user in users:
     #         user.a = 'a'
     #     return Response(users)
+    @action(detail=False, url_name='login')
+    def login(self, request):
+        user = User.objects.get(username=request.GET.get('username'))
+        token, created = Token.objects.get_or_create(user_id=user.id)
+        return JsonResponse({'token': token.key})
 
 class ArtworkSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
@@ -57,21 +62,15 @@ class ArtworkViewSet(viewsets.ModelViewSet):
         count = Artwork.objects.order_by('author').values('author').distinct().count()
         return JsonResponse({'count': count})
 
-class GameUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GameUser
-        fields = ('created_datetime', 'edited_datetime', 'username')
 
-class GameUserViewSet(viewsets.ModelViewSet):
-    queryset = GameUser.objects.all()
-    serializer_class = GameUserSerializer
 
-    @action(detail=False, url_name='login')
-    def login(self, request):
-        user = User.objects.get(username=request.GET.get('username'))
-        token, created = Token.objects.get_or_create(user_id=user.id)
-        return JsonResponse({'token': token.key})
 # class ArtworkViewSet(viewsets.ModelViewSet):
-# router.register('gameUsers', views.GameUserViewSet)
 # router.register('games', views.GameViewSet)
 # router.register('gameEvents', views.GameEventViewSet)
+class GameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = ('id', 'name', 'status', 'scoreA', 'scoreB', 'usersA', 'usersB')
+class GameViewSet(viewsets.ModelViewSet):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer

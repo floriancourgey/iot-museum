@@ -1,7 +1,14 @@
 import os
+import django_heroku
+import dj_database_url
+import dotenv
 from config import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default secret key used for development only')
 
@@ -63,14 +70,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': config['django']['database']['ENGINE'],
-        'NAME': config['django']['database']['NAME'],
-        'USER': config['django']['database']['USER'],
-        'PASSWORD': config['django']['database']['PASSWORD'],
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': config['django']['database']['ENGINE'],
+#         'NAME': config['django']['database']['NAME'],
+#         'USER': config['django']['database']['USER'],
+#         'PASSWORD': config['django']['database']['PASSWORD'],
+#     }
+# }
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -89,10 +98,14 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
 }
 
 # for django-debug-toolbar, @see https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
 INTERNAL_IPS = ['127.0.0.1']
+
+django_heroku.settings(locals())
+
+del DATABASES['default']['OPTIONS']['sslmode']

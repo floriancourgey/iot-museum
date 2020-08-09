@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
 
 class Country(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
@@ -66,17 +67,20 @@ class Artwork(models.Model):
                 return a
         return None
 
-class GameUser(models.Model):
-    created_datetime = models.DateTimeField(auto_now_add=True)
-    edited_datetime = models.DateTimeField(auto_now=True)
-    username = models.CharField(max_length=255)
-
 class Game(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     edited_datetime = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
+    scoreA = models.IntegerField(default=0)
+    scoreB = models.IntegerField(default=0)
+    usersA = models.ManyToManyField(User, related_name='gameA')
+    usersB = models.ManyToManyField(User, related_name='gameB')
+    def __str__(self):
+        return self.name+' '+str(self.scoreA)+'-'+str(self.scoreB)+' ('+self.status+')'
 
 class GameEvent(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     edited_datetime = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(GameUser, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
