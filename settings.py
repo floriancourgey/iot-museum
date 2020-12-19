@@ -106,6 +106,7 @@ REST_FRAMEWORK = {
 # for django-debug-toolbar, @see https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
 INTERNAL_IPS = ['127.0.0.1']
 
+# Activate Django-Heroku.
 django_heroku.settings(locals())
-
-del DATABASES['default']['OPTIONS']['sslmode']
+# commented on 20201219 per https://github.com/jacobian/dj-database-url/issues/107
+# del DATABASES['default']['OPTIONS']['sslmode']
