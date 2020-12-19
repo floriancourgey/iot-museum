@@ -2,7 +2,6 @@ import os
 import django_heroku
 import dj_database_url
 import dotenv
-from config import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -70,14 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': config['django']['database']['ENGINE'],
-#         'NAME': config['django']['database']['NAME'],
-#         'USER': config['django']['database']['USER'],
-#         'PASSWORD': config['django']['database']['PASSWORD'],
-#     }
-# }
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
@@ -109,4 +100,4 @@ INTERNAL_IPS = ['127.0.0.1']
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 # commented on 20201219 per https://github.com/jacobian/dj-database-url/issues/107
-# del DATABASES['default']['OPTIONS']['sslmode']
+del DATABASES['default']['OPTIONS']['sslmode']

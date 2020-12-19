@@ -1,8 +1,8 @@
+import os
 import requests
 import json
-from config import config
 
-headers = {'ApiKey': config['rmngp']['api_key']}
+headers = {'ApiKey': os.getenv('RMNGP_API_KEY')}
 def getRmngpObject(resource):
     url = 'https://api.art.rmngp.fr/v1/'+resource.replace(' ', '%20')
     print('Calling '+url)

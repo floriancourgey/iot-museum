@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
+import os
 import requests
 import json
 import random
-from config import config
 from models import db, Artwork
 from contextlib import suppress
 
-headers = {'X-Xapp-Token': config['artsy']['x_xapp_token']}
+headers = {'X-Xapp-Token': os.getenv('ARTSY_X_XAPP_TOKEN')
 def getArtsyObject(url):
     return json.loads(requests.get(url, headers=headers).text)
 

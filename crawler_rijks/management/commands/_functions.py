@@ -1,9 +1,9 @@
+import os
 import requests
 import json
-from config import config
 
 locale = 'en'
-api_key = config['rijks']['api_key']
+api_key = os.getenv('RIJKS_API_KEY')
 def rijksSearch(resource):
     url = 'https://www.rijksmuseum.nl/api/'+locale+'/collection?key='+api_key+'&format=json&q='+resource.replace(' ', '%20')
     print('Calling '+url)
