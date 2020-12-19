@@ -66,21 +66,3 @@ class Artwork(models.Model):
             if a:
                 return a
         return None
-
-class Game(models.Model):
-    created_datetime = models.DateTimeField(auto_now_add=True)
-    edited_datetime = models.DateTimeField(auto_now=True)
-    name = models.CharField(max_length=255)
-    status = models.CharField(max_length=255)
-    scoreA = models.IntegerField(default=0)
-    scoreB = models.IntegerField(default=0)
-    usersA = models.ManyToManyField(User, related_name='gameA')
-    usersB = models.ManyToManyField(User, related_name='gameB')
-    def __str__(self):
-        return self.name+' '+str(self.scoreA)+'-'+str(self.scoreB)+' ('+self.status+')'
-
-class GameEvent(models.Model):
-    created_datetime = models.DateTimeField(auto_now_add=True)
-    edited_datetime = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    game = models.ForeignKey(Game, on_delete=models.PROTECT)

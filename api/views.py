@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from museum.models import Artwork
-from museum.models import Game
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -61,16 +60,3 @@ class ArtworkViewSet(viewsets.ModelViewSet):
     def count_distinct_authors(self, request):
         count = Artwork.objects.order_by('author').values('author').distinct().count()
         return JsonResponse({'count': count})
-
-
-
-# class ArtworkViewSet(viewsets.ModelViewSet):
-# router.register('games', views.GameViewSet)
-# router.register('gameEvents', views.GameEventViewSet)
-class GameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Game
-        fields = ('id', 'name', 'status', 'scoreA', 'scoreB', 'usersA', 'usersB')
-class GameViewSet(viewsets.ModelViewSet):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer

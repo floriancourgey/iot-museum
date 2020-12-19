@@ -2,14 +2,10 @@ from django.contrib import admin
 from .models import Artwork
 from .models import Origin
 from .models import Country
-from .models import Game
-from .models import GameEvent
+import os
 from django.urls import path
 from django.template.response import TemplateResponse
-from config import config
 
-admin.site.register(Game)
-admin.site.register(GameEvent)
 
 admin.site.register(Country)
 
@@ -51,7 +47,7 @@ class ArtworkAdmin(admin.ModelAdmin):
     def add_from_rmngp(self, request):
         context = dict(
            self.admin_site.each_context(request),
-           RMNGP_API_KEY=config['rmngp']['api_key'],
+           RMNGP_API_KEY=os.getenv('RMNGP_API_KEY'),
         )
         return TemplateResponse(request, 'museum/admin/add_from_rmngp.html', context)
 
@@ -62,6 +58,6 @@ class ArtworkAdmin(admin.ModelAdmin):
     def add_from_rijks(self, request):
         context = dict(
             self.admin_site.each_context(request),
-            RIJKS_API_KEY=config['rijks']['api_key'],
+            RIJKS_API_KEY=os.getenv('RIJKS_API_KEY'),
         )
         return TemplateResponse(request, 'museum/admin/add_from_rijks.html', context)
