@@ -86,6 +86,7 @@ var app;
           name:app.getTitle(a, 'fr'),
           origin:'rmngp',
           url:app.getImage(a),
+          url_online:app.getImage(a),
           origin_artwork_id: a._id,
         };
         console.log('Sending artwork', data);
