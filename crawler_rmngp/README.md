@@ -3,8 +3,8 @@
 # Run
 ```console
 $ python manage.py rmngp_works # download 15 artworks
-$ python manage.py rmngp_works --per_page=200 # download 200 artworks
-$ python manage.py rmngp_works --per_page=200 --page=2 # download 200 artworks, at page 2
+$ python manage.py rmngp_works --per_page=100 # download 100 artworks (maximum)
+$ python manage.py rmngp_works --per_page=100 --page=2 # download 100 artworks, starting at page 2
 ```
 
 # Source API
