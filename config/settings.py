@@ -11,7 +11,7 @@ if os.path.isfile(dotenv_file):
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default secret key used for development only')
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False' # True if no env(DJANGO_DEBUG)
+DEBUG = (os.getenv('DJANGO_DEBUG', '') == '1')
 
 ALLOWED_HOSTS = [
     'localhost',
