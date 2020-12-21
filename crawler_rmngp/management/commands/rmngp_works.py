@@ -1,11 +1,11 @@
 from django.db.models import Q
 from django.core.management.base import BaseCommand, CommandError
-from museum.models import Artwork
+from museum.models import Artwork, Origin
 from contextlib import suppress
 from crawler_rmngp.management.commands.functions import getRmngpObject
 
 class Command(BaseCommand):
-    help = 'Usage: python manage.py rmngp_works --author "Vincent Van Gogh"'
+    help = 'Usage: python manage.py rmngp_works'
 
     def add_arguments(self, parser):
         parser.add_argument('--author')
@@ -30,10 +30,11 @@ class Command(BaseCommand):
         # convert json to Artwork objects
         print('Got API result, parsing...')
         artworks = []
+        origin = Origin.objects.get(id='rmngp')
         for artwork in result['hits']['hits']:
             if artwork['_score'] < 1:
                 continue
-            a = Artwork(origin='rmngp')
+            a = Artwork(origin=origin)
             json = artwork['_source']
             # mandatory fields
             with suppress (KeyError, IndexError):
@@ -56,7 +57,7 @@ class Command(BaseCommand):
                 a.date_display = json['date']['display']
                 a.date_display = a.date_display.replace('T00:00:00+00:00', '') # RmnGP sometimes adds timestamp
             with suppress (KeyError, IndexError):
-                a.origin_id = json['id']
+                a.origin_artwork_id = json['id']
             # append it to master
             artworks.append(a)
 

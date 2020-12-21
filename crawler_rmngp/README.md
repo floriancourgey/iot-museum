@@ -1,7 +1,13 @@
 # The French Rmn-GP Crawler
 
-Crawlers are located in `management/commands` and can be called from the root folder with `python manage.py filename`.
+# Run
+```console
+$ python manage.py rmngp_works # download 15 artworks
+$ python manage.py rmngp_works --per_page=200 # download 200 artworks
+$ python manage.py rmngp_works --per_page=200 --page=2 # download 200 artworks, at page 2
+```
 
+# Source API
 1 API:
 - https://api.art.rmngp.fr/v1/ (Classic API) - see `rmngp_works.py`
 
