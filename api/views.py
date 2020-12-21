@@ -11,20 +11,18 @@ from museum.models import Artwork
 
 class ArtworkSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
-        # check if artwork not already existing
-        a = Artwork()
-        a.__dict__ = validated_data
-        existing = a.existing()
-        if existing:
-            return existing
-        # otherwise, create it
-        return Artwork.objects.create(**validated_data)
+        artwork, created = Artwork.objects.get_or_create(
+            origin=validated_data['origin'],
+            origin_artwork_id=validated_data['origin_artwork_id'],
+            defaults=validated_data,
+        )
+        return artwork
 
     class Meta:
         model = Artwork
         fields = ('id', 'name', 'author',
             'url_online', 'url_local',
-            'origin', 'origin_id', 'active',
+            'origin', 'origin_artwork_id', 'active',
             'created_datetime')
 class ArtworkViewSet(viewsets.ModelViewSet):
     queryset = Artwork.objects.all()
