@@ -25,15 +25,17 @@ var app = new Vue({
     },
     next: function(){
       console.log('next() called');
+      if(this.isPaused){
+        console.log('next() exit because app.isPaused');
+        return;
+      }
       app.artworkHistory.push(app.artwork);
       clearTimeout(this.timeoutId);
       axios.get(urlNext)
         .then(function (response) {
           app.artwork = response.data;
         });
-      if(this.isPaused){
-        return;
-      }
+
       if(this.timeoutInterval <= 0){
         this.timeoutInterval = 10;
       }
