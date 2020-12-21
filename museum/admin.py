@@ -6,7 +6,6 @@ import os
 from django.urls import path
 from django.template.response import TemplateResponse
 
-
 admin.site.register(Country)
 
 admin.site.register(Origin)
