@@ -9,27 +9,6 @@ from rest_framework.authtoken.models import Token
 
 from museum.models import Artwork
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'url', 'username', 'email', 'is_staff')
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    # def list(self, request):
-    #     queryset = User.objects.all()
-    #     serializer = UserSerializer(queryset, many=True)
-    #     # return Response(serializer.data)
-    #     users = serializer.data
-    #     for user in users:
-    #         user.a = 'a'
-    #     return Response(users)
-    @action(detail=False, url_name='login')
-    def login(self, request):
-        user = User.objects.get(username=request.GET.get('username'))
-        token, created = Token.objects.get_or_create(user_id=user.id)
-        return JsonResponse({'token': token.key})
-
 class ArtworkSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # check if artwork not already existing
