@@ -69,7 +69,7 @@
         </div>
       </div>
     </footer>
-
+    <script>alert('test opera');</script>
     <script src="{% static 'es6-promise-4/es6-promise.min.js' %}"></script> <!-- ES6 polyfill for Promises used by axios -->
     <script src="{% static 'axios-0.18.0/axios.min.js' %}"></script>
     <script src="{% static 'vue-2.5.22/vue.min.js' %}"></script>
@@ -77,6 +77,11 @@
       var urlNext = '{% url 'next' %}';
       var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 999 %}';
       var MEDIA_URL = '{{ MEDIA_URL }}';
+      try {
+        var app2 = new Vue({});
+      catch (err) {
+        alert(err);
+      }
     </script>
     <script src="{% static 'index.js' %}" charset="utf-8"></script>
   </body>
