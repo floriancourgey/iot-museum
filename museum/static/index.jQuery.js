@@ -24,6 +24,7 @@ function next(){
       img.attr('src', data.url_online);
       artwork_name.text(data.name+' ');
       artwork_author.text(data.author+' ');
+      artwork_date_display.text(data.date_display);
     });
 
   // if(this.timeoutInterval <= 0){
