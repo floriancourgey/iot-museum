@@ -1,5 +1,10 @@
 var artworkHistory = [];
 
+var timeoutId = null;
+var timeoutInterval = 15; // in sec
+var img = jQuery('#img');
+img.css('height', window.innerHeight); // fix for old TV browsers
+
 function next(){
   debug('next() called');
   // if(this.isPaused){
@@ -14,16 +19,16 @@ function next(){
       debug(data);
       debug('json');
       debug(JSON.stringify(data));
-      jQuery('#img').attr('src', data.url_online);
+      img.attr('src', data.url_online);
     });
 
   // if(this.timeoutInterval <= 0){
   //   this.timeoutInterval = 10;
   // }
-  // this.timeoutId = setTimeout(function(){
-  //   console.log('setTimeout() called');
-  //   app.next();
-  // }, this.timeoutInterval*1000);
+  timeoutId = setTimeout(function(){
+    debug('setTimeout() called');
+    next();
+  }, timeoutInterval*1000);
   // console.log('next() timeoutId='+this.timeoutId);
 }
 
