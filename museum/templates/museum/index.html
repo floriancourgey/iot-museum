@@ -83,13 +83,16 @@
         debug(jQuery);
         debug(jQuery());
         debug('IIFE...');
-        (function($) {
-          debug('IIFE OK');
-          $(document).ready(function() {
-            debug('jquery OK');
-          });
-          debug('jquery...');
-        })(jQuery);
+        jQuery(function(){
+          debug('JQUERY OK');
+        });
+        // (function($) {
+        //   debug('IIFE OK');
+        //   $(document).ready(function() {
+        //     debug('jquery OK');
+        //   });
+        //   debug('jquery...');
+        // })(jQuery);
       } catch(err) {
         debug('err');
         alert(err);
