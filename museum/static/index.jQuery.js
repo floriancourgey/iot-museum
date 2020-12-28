@@ -3,9 +3,10 @@ var artworkHistory = [];
 var timeoutId = null;
 var timeoutInterval = 15; // in sec
 var img = jQuery('#img');
-img.css('height', window.innerHeight); // fix for old TV browsers
+img.css('height', window.innerHeight - 30); // fix for old TV browsers
 var artwork_name = jQuery('#artwork_name');
 var artwork_author = jQuery('#artwork_author');
+var artwork_date_display = jQuery('#artwork_date_display');
 
 function next(){
   debug('next() called');
