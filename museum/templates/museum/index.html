@@ -69,13 +69,15 @@
         </div>
       </div>
     </footer>
-    <script>alert('downloading jquery');</script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <script>alert('downloading jquery OK');</script>
+    <script>alert('downloading jquery 1.12 OK');</script>
     <script>
-      $(function(){
-        alert('jquery ok');
-      })
+      (function($) {
+          alert('iife ok');
+          $(document).ready(function() {
+            alert('jquery ok');
+          });
+      })(jQuery);
     </script>
   </body>
 </html>
