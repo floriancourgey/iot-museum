@@ -10,6 +10,10 @@ var artwork_date_display = jQuery('#artwork_date_display');
 
 function next(){
   debug('next() called');
+  if(timeoutId){
+    debug('timeout not null, exit');
+    return;
+  }
   // if(this.isPaused){
   //   console.log('next() exit because app.isPaused');
   //   return;
@@ -22,19 +26,33 @@ function next(){
       debug(data);
       debug('json');
       debug(JSON.stringify(data));
-      img.attr('src', data.url_online);
-      artwork_name.text(data.name+' ');
-      artwork_author.text(data.author+' ');
-      artwork_date_display.text(data.date_display);
+      // when image is loaded
+      img.on('load', function() {
+        img.off(); // remove timeout
+        debug('img loaded');
+        // change text
+        artwork_name.text(data.name+' ');
+        artwork_author.text(data.author+' ');
+        artwork_date_display.text(data.date_display);
+        // and set timeout
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(function(){
+          clearTimeout(timeoutId);
+          timeoutId = null;
+          next();
+        }, timeoutInterval*1000);
+        debug('setTimeout() called with id '+timeoutId);
+      }).attr('src', data.url_online);
+    })
+    .error(function(){
+      debug('error, calling next');
+      next();
     });
 
   // if(this.timeoutInterval <= 0){
   //   this.timeoutInterval = 10;
   // }
-  timeoutId = setTimeout(function(){
-    debug('setTimeout() called');
-    next();
-  }, timeoutInterval*1000);
+
   // console.log('next() timeoutId='+this.timeoutId);
 }
 
