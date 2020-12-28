@@ -80,21 +80,18 @@
     <script>debug('Downloading jquery OK');</script>
     <script>
       try{
-        debug(jQuery);
-        debug(jQuery());
-        debug('IIFE...');
+        var urlNext = '{% url 'next' %}';
+        var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 999 %}';
+        var MEDIA_URL = '{{ MEDIA_URL }}';
         jQuery(function(){
           debug('JQUERY OK');
+          debug('urlNext: '+urlNext);
+          debug('urlAdminArtwork: '+urlAdminArtwork);
+          debug('MEDIA_URL: '+MEDIA_URL);
         });
-        // (function($) {
-        //   debug('IIFE OK');
-        //   $(document).ready(function() {
-        //     debug('jquery OK');
-        //   });
-        //   debug('jquery...');
-        // })(jQuery);
       } catch(err) {
         debug('err');
+        debug(err);
         alert(err);
       }
     </script>
