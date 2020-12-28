@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <title>Musée salon</title>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'w3css-4/w3pro.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="{% static 'index.css' %}">
   </head>
   <body class="container-fluid">
@@ -22,19 +21,19 @@
           <div class="col-lg-2 w3-display-container">
             <div class="w3-display-middle full-width">
               {% verbatim %}
-              <h1 style="font-size:15pt;" id="artwork_name">&nbsp;</h1>
-              <h2 style="font-size:15px;" id="artwork_author" class="text-capitalize">&nbsp;</h2>
+              <h1 style="font-size:15pt;" id="artwork_name" class="w3-text-white">&nbsp;</h1>
+              <h2 style="font-size:15px;" id="artwork_author" class="w3-text-white text-capitalize">&nbsp;</h2>
               <p v-if="artwork.author_country_alpha2">
                 <img :src="'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/'+artwork.author_country_alpha2.toLowerCase()+'.svg'" id="author_country_alpha2"/>
               </p>
-              <p class="text-capitalize text-secondary">
+              <p class="text-capitalize w3-text-gray">
                 <small id="artwork_date_display"></small>
               </p>
               {% endverbatim %}
             </div>
           </div>
         </div>
-        <div class="row m-4">
+        <div class="row m-4 w3-text-light-gray">
           <div class="col">
             <div>
               <button @click="previous" class="btn btn-light btn-sm"><<</button>
@@ -73,6 +72,7 @@
       style="background:white;color:black;font-size:16">
     </div>
     <script>function debug(text){
+      console.log(text);
       document.getElementById('debug').innerHTML += text+'<br/>';
     }</script>
     <script>debug('Downloading jquery');</script>
