@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{% static 'index.css' %}">
   </head>
   <body class="container-fluid">
+    <div id="debug"
+      style="background:white;color:black;font-size:16">
+    </div>
     <main class="row text-center text-light" id="app">
       <div class="col">
         <div class="row">
@@ -69,18 +72,23 @@
         </div>
       </div>
     </footer>
-    <div style="background:white;color:black;font-size:16"></div>
+    <script>function debug(text){
+      document.getElementById('debug').innerHTML += text+'<br/>';
+    }</script>
+    <script>debug('Downloading jquery');</script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <script>alert('downloading jquery 1.12 OK');</script>
+    <script>debug('Downloading jquery OK');</script>
     <script>
       (function($) {
-          alert('iife ok');
+          debug('IIFE OK');
           try{
             $(document).ready(function() {
+              debug('jquery OK');
               alert('jquery ok');
             });
           } catch(err){
-            alrt(err);
+            debug('err');
+            alert(err);
           }
       })(jQuery);
     </script>
