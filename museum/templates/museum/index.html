@@ -69,7 +69,12 @@
         </div>
       </div>
     </footer>
-    <script>alert('test opera');</script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script>
+      $(function(){
+        alert('jquery ok');
+      })
+    </script>
     <script src="{% static 'es6-promise-4/es6-promise.min.js' %}"></script> <!-- ES6 polyfill for Promises used by axios -->
     <script src="{% static 'axios-0.18.0/axios.min.js' %}"></script>
     <script src="{% static 'vue-2.5.22/vue.min.js' %}"></script>
