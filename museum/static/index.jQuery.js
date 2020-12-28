@@ -14,7 +14,7 @@ function next(){
       debug(data);
       debug('json');
       debug(JSON.stringify(data));
-      jQuery('#img').css('background-image', 'url(' + data.url_online + ')');
+      jQuery('#img').attr('src', data.url_online);
     });
 
   // if(this.timeoutInterval <= 0){
