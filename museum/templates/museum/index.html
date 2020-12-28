@@ -79,18 +79,19 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <script>debug('Downloading jquery OK');</script>
     <script>
-      (function($) {
+      try{
+        debug('IIFE...');
+        (function($) {
           debug('IIFE OK');
-          try{
-            $(document).ready(function() {
-              debug('jquery OK');
-              alert('jquery ok');
-            });
-          } catch(err){
-            debug('err');
-            alert(err);
-          }
-      })(jQuery);
+          $(document).ready(function() {
+            debug('jquery OK');
+          });
+          debug('jquery...');
+        })(jQuery);
+      } catch(err) {
+        debug('err');
+        alert(err);
+      }
     </script>
   </body>
 </html>
