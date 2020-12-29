@@ -75,16 +75,15 @@
     <script>debug('Downloading jquery');</script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.11.3/dist/jquery.min.js"></script>
     <script>debug('Downloading jquery OK');</script>
+    <script src="{% static 'index.oldBrowser.js' %}" charset="utf-8"></script>
     <script>
       try{
         var urlNext = '{% url 'next' %}';
         var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 999 %}';
         var MEDIA_URL = '{{ MEDIA_URL }}';
         jQuery(function(){
-          debug('JQUERY OK');
-          debug('urlNext: '+urlNext);
-          debug('urlAdminArtwork: '+urlAdminArtwork);
-          debug('MEDIA_URL: '+MEDIA_URL);
+          debug('JQUERY OK urlNext: '+urlNext);
+          app.init();
         });
       } catch(err) {
         debug('err');
@@ -92,6 +91,5 @@
         alert(err);
       }
     </script>
-    <script src="{% static 'index.oldBrowser.js' %}" charset="utf-8"></script>
   </body>
 </html>
