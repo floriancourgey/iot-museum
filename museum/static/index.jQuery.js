@@ -1,19 +1,24 @@
 var artworkHistory = [];
 
+// data
 var timeoutId = null;
-var timeoutInterval = 15; // in sec
+var timeoutAfterSuccess = 15; // in sec
+var timeoutAfterError = 1; // in sec
+var artwork = null; // json data from server
+// DOM
 var img = jQuery('#img');
 img.css('height', window.innerHeight - 100); // fix for old TV browsers
 var artwork_name = jQuery('#artwork_name');
 var artwork_author = jQuery('#artwork_author');
 var artwork_date_display = jQuery('#artwork_date_display');
 
+function removeAllListeners(elem){
+  console.log('Removing all listeners from '+elem);
+  elem.off();
+}
+
 function next(){
   debug('next() called');
-  if(timeoutId){
-    debug('timeout not null, exit');
-    return;
-  }
   // if(this.isPaused){
   //   console.log('next() exit because app.isPaused');
   //   return;
@@ -22,31 +27,38 @@ function next(){
   // clearTimeout(this.timeoutId);
   jQuery.get(urlNext)
     .success(function (data) {
-      debug('data');
-      debug(data);
-      debug('json');
-      debug(JSON.stringify(data));
+      artwork = data;
       // when image is loaded
-      img.on('load', function() {
-        img.off(); // remove timeout
-        debug('img loaded');
-        // change text
-        artwork_name.text(data.name+' ');
-        artwork_author.text(data.author+' ');
-        artwork_date_display.text(data.date_display);
-        // and set timeout
-        clearTimeout(timeoutId);
+      img.error(function(e){
+        removeAllListeners(img);
+        debug('Image error, calling next');
         timeoutId = setTimeout(function(){
-          clearTimeout(timeoutId);
           timeoutId = null;
           next();
-        }, timeoutInterval*1000);
+        }, timeoutAfterError*1000);
+      })
+      img.on('load', function() {
+        removeAllListeners(img);
+        debug('img loaded');
+        // change text
+        artwork_name.text(artwork.name+' ');
+        artwork_author.text(artwork.author+' ');
+        artwork_date_display.text(artwork.date_display);
+        // and set timeout
+        timeoutId = setTimeout(function(){
+          timeoutId = null;
+          next();
+        }, timeoutAfterSuccess*1000);
         debug('setTimeout() called with id '+timeoutId);
-      }).attr('src', data.url_online);
+      }).attr('src', artwork.url_online);
     })
     .error(function(){
-      debug('error, calling next');
-      next();
+      removeAllListeners(img);
+      debug('API error, calling next');
+      timeoutId = setTimeout(function(){
+        timeoutId = null;
+        next();
+      }, timeoutAfterError*1000);
     });
 
   // if(this.timeoutInterval <= 0){
