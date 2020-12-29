@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <title>Musée salon</title>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'w3css-4/w3pro.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="{% static 'index.css' %}">
   </head>
   <body class="container-fluid">
@@ -17,24 +16,24 @@
 
           </div>
           <div class="col-lg-8 img-height">
-            <div class="img-height" id="img" v-if="artwork && getArtworkUrl()" :style="{'background-image':'url('+getArtworkUrl()+')'}"></div>
+            <img id="img" src="{% static 'iot-museumx64.png' %}"/>
           </div>
           <div class="col-lg-2 w3-display-container">
             <div class="w3-display-middle full-width">
               {% verbatim %}
-              <h1>{{artwork.name}}&nbsp;</h1>
-              <h2 class="text-capitalize">{{artwork.author}}&nbsp;</h2>
+              <h1 style="font-size:15pt;" id="artwork_name" class="w3-text-white">&nbsp;</h1>
+              <h2 style="font-size:15px;" id="artwork_author" class="w3-text-white text-capitalize">&nbsp;</h2>
               <p v-if="artwork.author_country_alpha2">
                 <img :src="'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/'+artwork.author_country_alpha2.toLowerCase()+'.svg'" id="author_country_alpha2"/>
               </p>
-              <p class="text-capitalize text-secondary">
-                <small>{{artwork.date_display}}</small>
+              <p class="text-capitalize w3-text-gray">
+                <small id="artwork_date_display"></small>
               </p>
               {% endverbatim %}
             </div>
           </div>
         </div>
-        <div class="row m-4">
+        <div class="row m-4 w3-text-light-gray">
           <div class="col">
             <div>
               <button @click="previous" class="btn btn-light btn-sm"><<</button>
@@ -69,20 +68,33 @@
         </div>
       </div>
     </footer>
-    <script>alert('test opera');</script>
-    <script src="{% static 'es6-promise-4/es6-promise.min.js' %}"></script> <!-- ES6 polyfill for Promises used by axios -->
-    <script src="{% static 'axios-0.18.0/axios.min.js' %}"></script>
-    <script src="{% static 'vue-2.5.22/vue.min.js' %}"></script>
-    <script type="text/javascript">
-      var urlNext = '{% url 'next' %}';
-      var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 999 %}';
-      var MEDIA_URL = '{{ MEDIA_URL }}';
-      try {
-        var app2 = new Vue({});
-      catch (err) {
+    <div id="debug"
+      style="background:white;color:black;font-size:16">
+    </div>
+    <script>function debug(text){
+      console.log(text);
+      document.getElementById('debug').innerHTML += text+'<br/>';
+    }</script>
+    <script>debug('Downloading jquery');</script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.11.3/dist/jquery.min.js"></script>
+    <script>debug('Downloading jquery OK');</script>
+    <script>
+      try{
+        var urlNext = '{% url 'next' %}';
+        var urlAdminArtwork = '{% url 'admin:museum_artwork_change' 999 %}';
+        var MEDIA_URL = '{{ MEDIA_URL }}';
+        jQuery(function(){
+          debug('JQUERY OK');
+          debug('urlNext: '+urlNext);
+          debug('urlAdminArtwork: '+urlAdminArtwork);
+          debug('MEDIA_URL: '+MEDIA_URL);
+        });
+      } catch(err) {
+        debug('err');
+        debug(err);
         alert(err);
       }
     </script>
-    <script src="{% static 'index.js' %}" charset="utf-8"></script>
+    <script src="{% static 'index.jQuery.js' %}" charset="utf-8"></script>
   </body>
 </html>
