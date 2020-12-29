@@ -7,7 +7,7 @@ import random
 class Index(View):
     def get(self, request):
         # return render(request, 'museum/index.html', {
-        return render(request, 'museum/index.jQuery.html', {
+        return render(request, 'museum/index.oldBrowser.html', {
             'numberOfArtworks': Artwork.objects.filter(active=1).count()
         })
 
