@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="{% static 'index.oldBrowser.css' %}">
   </head>
   <body class="container-fluid">
-    <main class="text-center text-light" id="app">
+    <main class="w3-center w3-text-light-gray" id="app">
       <div class="">
         <div class="">
           <div class="img-height">
             <img id="img" src="{% static 'iot-museumx64.png' %}"/>
           </div>
-          <div class="w3-display-container">
-            <div class="w3-display-middle full-width">
+          <div class="">
+            <div class="">
               {% verbatim %}
               <h1 style="font-size:15pt;" id="artwork_name" class="w3-text-white">&nbsp;</h1>
               <h2 style="font-size:15px;" id="artwork_author" class="w3-text-white text-capitalize">&nbsp;</h2>
@@ -39,7 +39,7 @@
               <button @click="next" class="btn btn-light btn-sm">>></button>
             </div>
             <div class="my-2">
-              <a :href="urlAdminArtwork.replace(999, artwork.id)" target="_blank">Edit in admin</a>
+              <a id="artwork_admin_link" href="#" target="_blank">Edit in admin</a>
             </div>
             <div class="my-2">
               Change every
@@ -54,7 +54,7 @@
         </div>
       </div>
     </main>
-    <footer class="row bg-dark text-center text-light p-4">
+    <footer class="w3-center w3-dark-grey w3-text-light-gray">
       <div class="col">
         <div class="mb-2">
           <img src="{% static 'iot-museumx64.png' %}"/>

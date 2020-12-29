@@ -10,6 +10,7 @@ const app = {
   artwork_name: jQuery('#artwork_name'),
   artwork_author: jQuery('#artwork_author'),
   artwork_date_display: jQuery('#artwork_date_display'),
+  artwork_admin_link: jQuery('#artwork_admin_link'),
   // constructor
   init: function(){
     this.setImageHeight();
@@ -28,6 +29,8 @@ const app = {
     jQuery.get(urlNext)
       .success(function (data) {
         self.artwork = data;
+        // admin link
+        self.artwork_admin_link.attr('href', urlAdminArtwork.replace(999, self.artwork.id));
         // when image is loaded
         self.img.error(function(e){
           self.removeAllListeners();
