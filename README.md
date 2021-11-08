@@ -29,8 +29,9 @@ Python 3.7.0
 
 ### Linux, Mac instructions
 ```bash
-$ pip3 install -r requirements.txt
-$ python3 manage.py runserver
+$ source venv/bin/activate
+(venv) $ pip3 install -r requirements.txt
+(venv) $ python3 manage.py runserver
 ```
 
 - Open up a browser and go to `http://localhost:8000`
