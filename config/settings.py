@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'debug_toolbar',
     'rest_framework.authtoken',
+    'gtm', # django-google-tag-manager
 ]
 
 MIDDLEWARE = [
@@ -101,3 +102,6 @@ INTERNAL_IPS = ['127.0.0.1']
 django_heroku.settings(locals())
 # commented on 20201219 per https://github.com/jacobian/dj-database-url/issues/107
 del DATABASES['default']['OPTIONS']['sslmode']
+
+# Django Google Tag Manager
+GOOGLE_TAG_ID = os.getenv('GOOGLE_TAG_ID')
